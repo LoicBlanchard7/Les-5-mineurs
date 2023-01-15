@@ -9,7 +9,7 @@
 2. Se connecter sur l'application 
 http://localhost:8055/admin/
 
-adress mail : admin@gmail.com
+adress mail : admin@admin.com
 mdp : admin
 
 Pour accéder à l'API générer : http://localhost:8055/items/ + nom de la collection souhaiter
