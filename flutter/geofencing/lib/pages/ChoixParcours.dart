@@ -2,8 +2,8 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:show_map/map.dart';
-import 'global.dart';
+import 'package:geofencing/pages/map.dart';
+import '../global.dart';
 
 class ChoixParcours extends StatefulWidget {
   const ChoixParcours({super.key});
