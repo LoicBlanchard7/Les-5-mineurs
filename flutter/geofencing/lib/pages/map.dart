@@ -2,7 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:geofencing/pages/ChoixParcours.dart';
+import 'package:geofencing/pages/detailPointDInteret.dart';
 import 'package:latlong2/latlong.dart';
+
+import '../global.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
@@ -14,64 +18,86 @@ class MapPage extends StatefulWidget {
 class _MyAppState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
-    var marker = <Marker>[];
-    marker = [
-      // your position
-      Marker(
-        point: LatLng(48.630963, 6.107150),
-        builder: (ctx) => const Icon(
-          Icons.my_location,
-          color: Colors.black,
-        ),
-      ),
-      // non-seen point (from zone)
-      Marker(
-        point: LatLng(48.630963, 6.108150),
-        builder: (ctx) => const Icon(
-          Icons.location_on,
-          color: Colors.blue,
-        ),
-      ),
-      // non-seen point
-      Marker(
-        point: LatLng(48.630963, 6.107850),
-        builder: (ctx) => const Icon(
-          Icons.location_on,
-          color: Colors.green,
-        ),
-      ),
-      // checked point (from zone)
-      Marker(
-        point: LatLng(48.631974, 6.108140),
-        builder: (ctx) => const Icon(
-          Icons.location_off,
-          color: Colors.blue,
-        ),
-      ),
-      // non-seen point
-      Marker(
-        point: LatLng(48.631974, 6.108555),
-        builder: (ctx) => const Icon(
-          Icons.location_off,
-          color: Colors.green,
-        ),
-      ),
-      // next goal
-      Marker(
-        point: LatLng(48.631363, 6.107550),
-        builder: (ctx) => const Icon(
-          Icons.circle,
-          color: Colors.black,
-        ),
-      ),
-      Marker(
-        point: LatLng(48.631363, 6.107550),
-        builder: (ctx) => const Icon(
-          Icons.location_on,
-          color: Colors.yellow,
-        ),
-      ),
-    ];
+    List<Marker> setMarkerList() {
+      List<Marker> liste = [];
+      for (var marker in Global.markerList) {
+        if (marker.actualGoal) {
+          liste.add(Marker(
+            point: marker.localisation,
+            builder: (context) => IconButton(
+              icon: Icon(Icons.circle, color: Colors.black),
+              onPressed: () {},
+            ),
+          ));
+          liste.add(Marker(
+            point: marker.localisation,
+            builder: (context) => IconButton(
+              icon: Icon(Icons.location_on, color: Colors.yellow),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => detailPointDInteret(marker.id)),
+                );
+              },
+            ),
+          ));
+        } else {
+          if (marker.type == "me") {
+            liste.add(Marker(
+              point: marker.localisation,
+              builder: (context) => IconButton(
+                icon: Icon(Icons.my_location),
+                onPressed: () {},
+              ),
+            ));
+          } else {
+            Icon iconPerso;
+            switch (marker.type) {
+              case "non-seen point (from zone)":
+                iconPerso = Icon(
+                  Icons.location_on,
+                  color: Colors.blue,
+                );
+                break;
+              case "non-seen point":
+                iconPerso = Icon(
+                  Icons.location_on,
+                  color: Colors.green,
+                );
+                break;
+              case "checked point (from zone)":
+                iconPerso = Icon(
+                  Icons.location_off,
+                  color: Colors.blue,
+                );
+                break;
+              default:
+                iconPerso = Icon(
+                  Icons.location_off,
+                  color: Colors.green,
+                );
+                break;
+            }
+            liste.add(Marker(
+              point: marker.localisation,
+              builder: (context) => IconButton(
+                icon: iconPerso,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => detailPointDInteret(marker.id)),
+                  );
+                },
+              ),
+            ));
+          }
+        }
+      }
+
+      return liste;
+    }
 
     var cameraIcon = Icon(
       Icons.cameraswitch_outlined,
@@ -81,7 +107,10 @@ class _MyAppState extends State<MapPage> {
 
     var backIcon = GestureDetector(
       onTap: () {
-        Navigator.pop(context);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ChoixParcours()),
+        );
       },
       child: Icon(
         Icons.arrow_back_ios_new,
@@ -107,7 +136,7 @@ class _MyAppState extends State<MapPage> {
                     subdomains: const ['a', 'b', 'c'],
                   ),
                   MarkerLayer(
-                    markers: marker,
+                    markers: setMarkerList(),
                   ),
                   Stack(
                     children: [
