@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geofencing/pages/ChoixParcours.dart';
 import 'package:geofencing/pages/detailPointDInteret.dart';
+import 'package:geofencing/pages/scanQrCode.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../global.dart';
@@ -37,7 +38,9 @@ class _MyAppState extends State<MapPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => detailPointDInteret(marker.id)),
+                      //builder: (context) => detailPointDInteret(marker.id)),
+                      builder: (contect) =>
+                          qrCodeScanner(title: 'Scan QR Code.')),
                 );
               },
             ),
