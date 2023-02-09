@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, camel_case_types, unused_import
 import 'package:flutter/material.dart';
+import 'package:geofencing/pages/detailPointDInteret.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:geofencing/global.dart';
 import 'map.dart';
@@ -57,7 +58,18 @@ class _MyPageState extends State<qrCodeScanner> {
             ),
             Center(
               child: (result != null)
-                  ? Text('${result!.code}')
+                  ? TextButton(
+                      child: const Text('Informations du point'),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => detailPointDInteret(
+                                  int.tryParse('$result!.code') ?? 1)),
+                        );
+                      })
+
+                  /*? Text('${result!.code}')*/
                   : const Text('Scan a code'),
             )
           ],
