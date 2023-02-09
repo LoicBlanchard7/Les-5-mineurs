@@ -38,9 +38,7 @@ class _MyAppState extends State<MapPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      //builder: (context) => detailPointDInteret(marker.id)),
-                      builder: (contect) =>
-                          qrCodeScanner(title: 'Scan QR Code.')),
+                      builder: (context) => detailPointDInteret(marker.id)),
                 );
               },
             ),
@@ -102,10 +100,20 @@ class _MyAppState extends State<MapPage> {
       return liste;
     }
 
-    var cameraIcon = Icon(
-      Icons.cameraswitch_outlined,
-      size: 70,
-      color: Colors.black,
+    var cameraIcon = GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  const qrCodeScanner(title: 'Scan QR Code.')),
+        );
+      },
+      child: Icon(
+        Icons.cameraswitch_outlined,
+        size: 70,
+        color: Colors.black,
+      ),
     );
 
     var backIcon = GestureDetector(
