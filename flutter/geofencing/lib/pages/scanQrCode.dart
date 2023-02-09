@@ -1,3 +1,4 @@
+// ignore_for_file: file_names, camel_case_types
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
@@ -55,7 +56,7 @@ class _MyPageState extends State<qrCodeScanner> {
             Center(
               child: (result != null)
                   ? Text('${result!.code}')
-                  : Text('Scan a code'),
+                  : const Text('Scan a code'),
             )
           ],
         ),

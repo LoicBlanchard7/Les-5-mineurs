@@ -86,11 +86,14 @@ class Global {
         Global.markerList[id].type = "checked point";
         break;
     }
-    // TODO : traiter le parcours
+    // TO DO : traiter le parcours
     if (Global.markerList[id].actualGoal) {
       var index = Global.parcoursList[Global.choixParcours].indexOf(id);
+      // ignore: avoid_print
       print(
           'id: $id - index : $index - choixParcours : ${Global.choixParcours}');
+
+      // ignore: avoid_print
       print(Global.parcoursList[Global.choixParcours]);
       if (index + 1 < Global.parcoursList[Global.choixParcours].length) {
         Global.markerList[Global.parcoursList[Global.choixParcours][index + 1]]
