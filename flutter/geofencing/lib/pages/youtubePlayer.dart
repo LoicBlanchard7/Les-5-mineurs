@@ -19,6 +19,10 @@ class YoutubePlayerScaffold {
     );
   }
 
+  void stopVideo() {
+    controller.pause();
+  }
+
   Container build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(top: 25, bottom: 25),

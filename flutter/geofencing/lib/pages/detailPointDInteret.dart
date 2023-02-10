@@ -1,6 +1,5 @@
 // ignore_for_file: library_private_types_in_public_api, file_names, camel_case_types, must_be_immutable, no_logic_in_create_state
 import 'package:flutter/material.dart';
-// import 'package:video_player/video_player.dart';
 import 'package:geofencing/global.dart';
 import 'package:geofencing/pages/youtubePlayer.dart';
 import 'map.dart';
@@ -22,50 +21,39 @@ class _MyAppState extends State<detailPointDInteret> {
   @override
   Widget build(BuildContext context) {
     Global.pointChecking(id);
-    var backIcon = GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const MapPage()),
-        );
-      },
-      child: const Icon(
-        Icons.arrow_back_ios_new,
-        size: 50,
-        color: Colors.black,
-      ),
-    );
+    List<YoutubePlayerScaffold> playersList = [];
+    backPress() {
+      for (var element in playersList) {
+        element.stopVideo();
+      }
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const MapPage()),
+      );
+    }
 
     return Scaffold(
-      body: Stack(
-        children: [
-          Align(
-            alignment: Alignment.topLeft,
-            child: backIcon,
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new,
+              size: 50, color: Colors.white),
+          onPressed: () => {backPress()},
+        ),
+        toolbarHeight: 120,
+        centerTitle: true,
+        title: Text(
+          Global.detailsList[id][0].data,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 50,
           ),
-          Container(
-            margin: const EdgeInsets.only(left: 50.0, right: 50.0),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(
-                        left: 50.0, right: 50.0, top: 50.0, bottom: 50.0),
-                    child: Text(
-                      Global.detailsList[id][0].data,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 35,
-                      ),
-                    ),
-                  ),
-                  Affichage(id),
-                ],
-              ),
-            ),
-          ),
-        ],
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          margin: const EdgeInsets.all(50.0),
+          child: Affichage(id, playersList),
+        ),
       ),
     );
   }
@@ -73,19 +61,20 @@ class _MyAppState extends State<detailPointDInteret> {
 
 class Affichage extends StatelessWidget {
   int id;
+  List<YoutubePlayerScaffold> playersList;
 
-  Affichage(this.id, {super.key});
+  Affichage(this.id, this.playersList, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Table(
-      // border: TableBorder.all(),
-      children: contenuAffichage(context, id),
+      children: contenuAffichage(context, id, playersList),
     );
   }
 }
 
-List<TableRow> contenuAffichage(BuildContext context, int id) {
+List<TableRow> contenuAffichage(
+    BuildContext context, int id, List<YoutubePlayerScaffold> playersList) {
   List<TableRow> contenu = [];
   for (var element in Global.detailsList[id]) {
     switch (element.type) {
@@ -95,6 +84,7 @@ List<TableRow> contenuAffichage(BuildContext context, int id) {
             children: [
               Text(
                 element.data,
+                textAlign: TextAlign.justify,
                 style: DefaultTextStyle.of(context)
                     .style
                     .apply(fontSizeFactor: 2.0),
@@ -125,6 +115,7 @@ List<TableRow> contenuAffichage(BuildContext context, int id) {
             ],
           ),
         );
+        playersList.add(player);
         break;
     }
   }
