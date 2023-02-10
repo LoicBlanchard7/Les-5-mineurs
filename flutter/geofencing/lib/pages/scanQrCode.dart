@@ -61,14 +61,17 @@ class _MyPageState extends State<qrCodeScanner> {
                   ? TextButton(
                       child: const Text('Informations du point'),
                       onPressed: () {
+                        print('resolve : ${result!.code}');
+
+                        print('type : ${result!.code.runtimeType}');
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => detailPointDInteret(
-                                  int.tryParse('$result!.code') ?? 1)),
+                                  int.parse('${result!.code}'))),
                         );
                       })
-
                   /*? Text('${result!.code}')*/
                   : const Text('Scan a code'),
             )
