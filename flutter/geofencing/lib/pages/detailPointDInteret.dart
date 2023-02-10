@@ -32,27 +32,33 @@ class _MyAppState extends State<detailPointDInteret> {
       );
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new,
-              size: 50, color: Colors.white),
-          onPressed: () => {backPress()},
-        ),
-        toolbarHeight: 120,
-        centerTitle: true,
-        title: Text(
-          Global.detailsList[id][0].data,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 50,
+    return WillPopScope(
+      onWillPop: () {
+        backPress();
+        return Future(() => false);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new,
+                size: 50, color: Colors.white),
+            onPressed: () => {backPress()},
+          ),
+          toolbarHeight: 120,
+          centerTitle: true,
+          title: Text(
+            Global.detailsList[id][0].data,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 50,
+            ),
           ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          margin: const EdgeInsets.all(50.0),
-          child: Affichage(id, playersList),
+        body: SingleChildScrollView(
+          child: Container(
+            margin: const EdgeInsets.all(50.0),
+            child: Affichage(id, playersList),
+          ),
         ),
       ),
     );
