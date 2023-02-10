@@ -5,6 +5,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:geofencing/pages/ChoixParcours.dart';
 import 'package:geofencing/pages/detailPointDInteret.dart';
 import 'package:geofencing/pages/scanQrCode.dart';
+import 'package:geofencing/pages/reglages.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../global.dart';
@@ -26,64 +27,30 @@ class _MyAppState extends State<MapPage> {
           liste.add(Marker(
             point: marker.localisation,
             builder: (context) => IconButton(
-              icon: Icon(Icons.circle, color: Colors.black),
-              onPressed: () {},
-            ),
-          ));
-          liste.add(Marker(
-            point: marker.localisation,
-            builder: (context) => IconButton(
-              icon: Icon(Icons.location_on, color: Colors.yellow),
+              icon: Icon(
+                Icons.push_pin,
+                color: Colors.red,
+                shadows: const [Shadow(blurRadius: 2, color: Colors.blue)],
+              ),
               onPressed: () {
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => detailPointDInteret(marker.id)),
-                );
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => detailPointDInteret(marker.id)));
               },
             ),
           ));
         } else {
-          if (marker.type == "me") {
+          if (marker.id == null) {
             liste.add(Marker(
               point: marker.localisation,
-              builder: (context) => IconButton(
-                icon: Icon(Icons.my_location),
-                onPressed: () {},
-              ),
+              builder: (context) => Icon(Icons.my_location),
             ));
           } else {
-            Icon iconPerso;
-            switch (marker.type) {
-              case "non-seen point (from zone)":
-                iconPerso = Icon(
-                  Icons.location_on,
-                  color: Colors.blue,
-                );
-                break;
-              case "non-seen point":
-                iconPerso = Icon(
-                  Icons.location_on,
-                  color: Colors.green,
-                );
-                break;
-              case "checked point (from zone)":
-                iconPerso = Icon(
-                  Icons.location_off,
-                  color: Colors.blue,
-                );
-                break;
-              default:
-                iconPerso = Icon(
-                  Icons.location_off,
-                  color: Colors.green,
-                );
-                break;
-            }
             liste.add(Marker(
               point: marker.localisation,
               builder: (context) => IconButton(
-                icon: iconPerso,
+                icon: marker.type,
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -99,36 +66,6 @@ class _MyAppState extends State<MapPage> {
 
       return liste;
     }
-
-    var cameraIcon = GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  const qrCodeScanner(title: 'Scan QR Code.')),
-        );
-      },
-      child: Icon(
-        Icons.cameraswitch_outlined,
-        size: 70,
-        color: Colors.black,
-      ),
-    );
-
-    var backIcon = GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const ChoixParcours()),
-        );
-      },
-      child: Icon(
-        Icons.arrow_back_ios_new,
-        size: 50,
-        color: Colors.black,
-      ),
-    );
 
     return Scaffold(
       body: Center(
@@ -146,21 +83,95 @@ class _MyAppState extends State<MapPage> {
                         "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                     subdomains: const ['a', 'b', 'c'],
                   ),
+                  CircleLayer(
+                    circles: Global.circles,
+                  ),
+                  PolygonLayer(
+                    polygons: Global.polygones,
+                  ),
                   MarkerLayer(
                     markers: setMarkerList(),
                   ),
-                  Stack(
-                    children: [
-                      Align(
-                        alignment: Alignment.bottomRight,
-                        child: cameraIcon,
+                ],
+              ),
+            ),
+            Container(
+              // margin: const EdgeInsets.all(15.0),
+              padding:
+                  EdgeInsets.only(left: 100, right: 100, top: 10, bottom: 10),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.black,
+                  width: 5.0,
+                ),
+                color: Color.fromARGB(255, 128, 183, 227),
+              ),
+              child: Stack(
+                children: [
+                  // fond circulaire bouton camera
+                  Align(
+                    alignment: Alignment.center,
+                    child: Icon(
+                      Icons.circle,
+                      size: 70,
+                      color: Colors.black,
+                    ),
+                  ),
+                  // BOUTON CAMERA
+                  Align(
+                    alignment: Alignment.center,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const qrCodeScanner(title: 'Scan QR Code.')),
+                        );
+                      },
+                      child: Icon(
+                        Icons.cameraswitch_outlined,
+                        size: 70,
+                        color: Colors.white,
                       ),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: backIcon,
-                      )
-                    ],
-                  )
+                    ),
+                  ),
+                  // BOUTON CHOIX PARCOURS
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ChoixParcours()),
+                        );
+                      },
+                      child: Icon(
+                        Icons.route_outlined,
+                        size: 70,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  // BOUTON REGLAGE
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ReglagePage()),
+                        );
+                      },
+                      child: Icon(
+                        Icons.settings,
+                        size: 70,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

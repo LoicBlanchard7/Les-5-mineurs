@@ -1,13 +1,16 @@
 // ignore_for_file: camel_case_types, prefer_typing_uninitialized_variables
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
 class myMarker {
   LatLng localisation;
-  String type;
+  Icon type;
   var id;
   bool actualGoal;
-  myMarker(this.localisation, this.type, this.id, this.actualGoal);
+  myMarker(this.localisation, this.type, this.id, [this.actualGoal = false]);
 }
 
 class myDetail {
@@ -17,16 +20,46 @@ class myDetail {
 }
 
 class Global {
-  static int choixParcours = 3;
+  static int choixParcours = 0;
 
   static List<myMarker> markerList = [
-    myMarker(
-        LatLng(48.630963, 6.108150), "non-seen point (from zone)", 0, false),
-    myMarker(LatLng(48.630963, 6.107850), "non-seen point", 1, false),
-    myMarker(LatLng(48.631974, 6.108140), "non-seen point", 2, false),
-    myMarker(LatLng(48.631363, 6.107550), "non-seen point", 3, false),
-    myMarker(LatLng(48.630963, 6.107150), "me", null, false),
-    // myMarker(LatLng(48.631363, 6.107550), "next goal"),
+    myMarker(LatLng(48.630963, 6.108150),
+        const Icon(Icons.push_pin, color: Colors.blue), 0),
+    myMarker(LatLng(48.630963, 6.107850),
+        const Icon(Icons.push_pin, color: Colors.green), 1),
+    myMarker(LatLng(48.631974, 6.108140),
+        const Icon(Icons.push_pin, color: Colors.green), 2),
+    myMarker(LatLng(48.631363, 6.107550),
+        const Icon(Icons.push_pin, color: Colors.green), 3),
+    myMarker(LatLng(48.629963, 6.105150),
+        const Icon(Icons.push_pin, color: Colors.blue), 4),
+    myMarker(LatLng(48.630963, 6.107150), const Icon(Icons.my_location), null),
+  ];
+
+  static List<CircleMarker> circles = [
+    CircleMarker(
+      point: LatLng(48.629963, 6.105150),
+      radius: 25,
+      useRadiusInMeter: true,
+      color: const Color.fromRGBO(33, 150, 243, 0.2),
+      borderStrokeWidth: 1.0,
+      borderColor: Colors.blue,
+    ),
+  ];
+
+  static List<Polygon> polygones = [
+    Polygon(
+      points: [
+        LatLng(48.630763, 6.107150),
+        LatLng(48.630763, 6.107750),
+        LatLng(48.630363, 6.107550),
+        LatLng(48.630563, 6.107150),
+      ],
+      color: const Color.fromRGBO(33, 150, 243, 0.2),
+      isFilled: true,
+      borderStrokeWidth: 1.0,
+      borderColor: Colors.blue,
+    ),
   ];
 
   static List<List<int>> parcoursList = [
@@ -65,6 +98,15 @@ class Global {
       myDetail("txt",
           "t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."),
     ],
+    [
+      myDetail("title", "Sortie n°2"),
+      myDetail("txt",
+          "Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text."),
+      myDetail("mp4", "https://youtu.be/nXniDOo3Y0c"),
+      myDetail("txt",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."),
+      myDetail("mp4", "https://youtu.be/nXniDOo3Y0c"),
+    ],
   ];
 
   static void selectParcours(choix) {
@@ -78,23 +120,20 @@ class Global {
   }
 
   static void pointChecking(id) {
-    switch (Global.markerList[id].type) {
-      case "non-seen point (from zone)":
-        Global.markerList[id].type = "checked point (from zone)";
-        break;
-      case "non-seen point":
-        Global.markerList[id].type = "checked point";
-        break;
+    if (Global.markerList[id].type.color == Colors.blue) {
+      Global.markerList[id].type =
+          const Icon(Icons.push_pin_outlined, color: Colors.blue);
+    } else {
+      Global.markerList[id].type =
+          const Icon(Icons.push_pin_outlined, color: Colors.green);
     }
-    // TO DO : traiter le parcours
     if (Global.markerList[id].actualGoal) {
       var index = Global.parcoursList[Global.choixParcours].indexOf(id);
-      // ignore: avoid_print
-      print(
-          'id: $id - index : $index - choixParcours : ${Global.choixParcours}');
-
-      // ignore: avoid_print
-      print(Global.parcoursList[Global.choixParcours]);
+      if (kDebugMode) {
+        print(
+            'id: $id - index : $index - choixParcours : ${Global.choixParcours}');
+        print(Global.parcoursList[Global.choixParcours]);
+      }
       if (index + 1 < Global.parcoursList[Global.choixParcours].length) {
         Global.markerList[Global.parcoursList[Global.choixParcours][index + 1]]
             .actualGoal = true;

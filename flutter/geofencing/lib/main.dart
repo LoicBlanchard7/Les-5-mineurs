@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'pages/ChoixParcours.dart';
+import 'pages/accueil.dart';
 
 void main() {
   runApp(const MaterialApp(
-    home: ChoixParcours(),
+    home: AccueilPage(),
   ));
 }

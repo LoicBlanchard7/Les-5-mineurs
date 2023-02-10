@@ -40,6 +40,10 @@ dependencies:
   flutter_map: any
   latlong2: ^0.8.0  
   flutter_osm_plugin: ^0.42.0
+  location: ^4.4.0
+  syncfusion_flutter_maps: ^20.4.49
+  video_player: ^2.5.1
+  youtube_player_flutter: ^8.1.0
 
 
 dev_dependencies:
@@ -59,10 +63,13 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
 
-  # assets:
-  #   - Fete-du-fer_2017-222_DxO_R-300x300.jpg
-  #   - DSC_1855_DxO_R-768x512.jpg
-  #   - IMG_4258_DxO_R-201x300.jpg
+  assets:
+    - assets/fond_accueil.jpg
+    - assets/fond_choix.jpg
+    - assets/fond_reglages.jpg
+    - assets/DSC_1855_DxO_R-768x512.jpg
+    - assets/Fete-du-fer_2017-222_DxO_R-300x300.jpg
+    - assets/IMG_4258_DxO_R-201x300.jpg
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

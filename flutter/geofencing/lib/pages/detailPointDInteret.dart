@@ -1,6 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api, file_names, camel_case_types, must_be_immutable, no_logic_in_create_state
 import 'package:flutter/material.dart';
+// import 'package:video_player/video_player.dart';
 import 'package:geofencing/global.dart';
+import 'package:geofencing/pages/youtubePlayer.dart';
 import 'map.dart';
 
 class detailPointDInteret extends StatefulWidget {
@@ -106,9 +108,20 @@ List<TableRow> contenuAffichage(BuildContext context, int id) {
           TableRow(
             children: [
               Image.asset(
-                element.data,
+                'assets/${element.data}',
                 fit: BoxFit.contain,
               )
+            ],
+          ),
+        );
+        break;
+      case "mp4":
+        YoutubePlayerScaffold player = YoutubePlayerScaffold(element.data);
+        player.initState();
+        contenu.add(
+          TableRow(
+            children: [
+              player.build(context),
             ],
           ),
         );

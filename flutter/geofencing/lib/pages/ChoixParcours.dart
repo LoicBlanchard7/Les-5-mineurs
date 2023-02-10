@@ -17,19 +17,27 @@ class _MyAppState extends State<ChoixParcours> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        margin: const EdgeInsets.only(left: 50.0, right: 50.0),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/fond_choix.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        padding: const EdgeInsets.only(left: 50.0, right: 50.0),
         child: Column(
           // ignore: prefer_const_literals_to_create_immutables
           children: [
             Container(
               margin: const EdgeInsets.only(
-                  left: 50.0, right: 50.0, top: 50.0, bottom: 50.0),
+                  left: 50.0, right: 50.0, top: 80.0, bottom: 50.0),
               child: const Text(
                 'Bienvenue dans la visite extérieur de la mine de Neuve-Maison',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 35,
+                  color: Colors.white,
+                  shadows: [Shadow(blurRadius: 3, color: Colors.black)],
                 ),
               ),
             ),
@@ -74,6 +82,8 @@ class Tableau extends StatelessWidget {
           ],
         ),
         TableRow(
+          decoration:
+              const BoxDecoration(color: Color.fromARGB(150, 255, 255, 255)),
           children: [
             GestureDetector(
               onTap: () {
@@ -89,6 +99,8 @@ class Tableau extends StatelessWidget {
           ],
         ),
         TableRow(
+          decoration:
+              const BoxDecoration(color: Color.fromARGB(150, 255, 255, 255)),
           children: [
             GestureDetector(
               onTap: () {
@@ -104,6 +116,8 @@ class Tableau extends StatelessWidget {
           ],
         ),
         TableRow(
+          decoration:
+              const BoxDecoration(color: Color.fromARGB(150, 255, 255, 255)),
           children: [
             GestureDetector(
               onTap: () {
@@ -119,6 +133,8 @@ class Tableau extends StatelessWidget {
           ],
         ),
         TableRow(
+          decoration:
+              const BoxDecoration(color: Color.fromARGB(150, 255, 255, 255)),
           children: [
             GestureDetector(
               onTap: () {
