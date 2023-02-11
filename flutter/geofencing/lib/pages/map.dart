@@ -1,14 +1,38 @@
 // ignore_for_file: library_private_types_in_public_api, non_constant_identifier_names, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:location/location.dart';
 import 'package:flutter_map/flutter_map.dart';
+import '../global.dart';
 import 'package:geofencing/pages/ChoixParcours.dart';
 import 'package:geofencing/pages/detailPointDInteret.dart';
 import 'package:geofencing/pages/scanQrCode.dart';
 import 'package:geofencing/pages/reglages.dart';
-import 'package:latlong2/latlong.dart';
 
-import '../global.dart';
+Future<LocationData?> _currentLocation() async {
+  bool serviceEnabled;
+  PermissionStatus permissionGranted;
+
+  Location location = Location();
+
+  serviceEnabled = await location.serviceEnabled();
+  if (!serviceEnabled) {
+    serviceEnabled = await location.requestService();
+    if (!serviceEnabled) {
+      return null;
+    }
+  }
+
+  permissionGranted = await location.hasPermission();
+  if (permissionGranted == PermissionStatus.denied) {
+    permissionGranted = await location.requestPermission();
+    if (permissionGranted != PermissionStatus.granted) {
+      return null;
+    }
+  }
+  return await location.getLocation();
+}
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
@@ -20,16 +44,22 @@ class MapPage extends StatefulWidget {
 class _MyAppState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
-    List<Marker> setMarkerList() {
-      List<Marker> liste = [];
+    List<Marker> setMarkerList(currentLocation) {
+      List<Marker> liste = [
+        Marker(
+          point: LatLng(currentLocation.latitude!, currentLocation.longitude!),
+          builder: (context) => Icon(Icons.location_history),
+        )
+      ];
       for (var marker in Global.markerList) {
         if (marker.actualGoal) {
           liste.add(Marker(
             point: marker.localisation,
             builder: (context) => IconButton(
               icon: Icon(
-                Icons.push_pin,
+                Icons.my_location,
                 color: Colors.red,
+                size: 30,
                 shadows: const [Shadow(blurRadius: 2, color: Colors.blue)],
               ),
               onPressed: () {
@@ -48,18 +78,18 @@ class _MyAppState extends State<MapPage> {
             ));
           } else {
             liste.add(Marker(
-              point: marker.localisation,
-              builder: (context) => IconButton(
-                icon: marker.type,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => detailPointDInteret(marker.id)),
-                  );
-                },
-              ),
-            ));
+                point: marker.localisation,
+                builder: (context) => GestureDetector(
+                      child: marker.type,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  detailPointDInteret(marker.id)),
+                        );
+                      },
+                    )));
           }
         }
       }
@@ -72,27 +102,39 @@ class _MyAppState extends State<MapPage> {
         child: Column(
           children: [
             Flexible(
-              child: FlutterMap(
-                options: MapOptions(
-                  center: LatLng(48.6295563, 6.107150),
-                  zoom: 17,
-                ),
-                children: [
-                  TileLayer(
-                    urlTemplate:
-                        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                    subdomains: const ['a', 'b', 'c'],
-                  ),
-                  CircleLayer(
-                    circles: Global.circles,
-                  ),
-                  PolygonLayer(
-                    polygons: Global.polygones,
-                  ),
-                  MarkerLayer(
-                    markers: setMarkerList(),
-                  ),
-                ],
+              child: FutureBuilder<LocationData?>(
+                future: _currentLocation(),
+                builder:
+                    (BuildContext context, AsyncSnapshot<dynamic> snapchat) {
+                  if (snapchat.hasData) {
+                    final LocationData currentLocation = snapchat.data;
+                    return FlutterMap(
+                      options: MapOptions(
+                        // center: LatLng(currentLocation.latitude!,
+                        // currentLocation.longitude!),
+                        center: LatLng(48.6295563, 6.107150),
+                        zoom: 17,
+                      ),
+                      children: [
+                        TileLayer(
+                          urlTemplate:
+                              "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                          subdomains: const ['a', 'b', 'c'],
+                        ),
+                        CircleLayer(
+                          circles: Global.circles,
+                        ),
+                        PolygonLayer(
+                          polygons: Global.polygones,
+                        ),
+                        MarkerLayer(
+                          markers: setMarkerList(currentLocation),
+                        ),
+                      ],
+                    );
+                  }
+                  return const Center(child: CircularProgressIndicator());
+                },
               ),
             ),
             Container(

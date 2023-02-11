@@ -51,7 +51,7 @@ class _MyPageState extends State<qrCodeScanner> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Container(
+            SizedBox(
               height: 400,
               width: 400,
               child: QRView(key: _gLobalkey, onQRViewCreated: qr),
@@ -61,10 +61,6 @@ class _MyPageState extends State<qrCodeScanner> {
                   ? TextButton(
                       child: const Text('Informations du point'),
                       onPressed: () {
-                        print('resolve : ${result!.code}');
-
-                        print('type : ${result!.code.runtimeType}');
-
                         Navigator.push(
                           context,
                           MaterialPageRoute(

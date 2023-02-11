@@ -24,16 +24,15 @@ class Global {
 
   static List<myMarker> markerList = [
     myMarker(LatLng(48.630963, 6.108150),
-        const Icon(Icons.push_pin, color: Colors.blue), 0),
+        const Icon(Icons.my_location, color: Colors.blue, size: 25), 0),
     myMarker(LatLng(48.630963, 6.107850),
-        const Icon(Icons.push_pin, color: Colors.green), 1),
+        const Icon(Icons.my_location, color: Colors.green, size: 25), 1),
     myMarker(LatLng(48.631974, 6.108140),
-        const Icon(Icons.push_pin, color: Colors.green), 2),
+        const Icon(Icons.my_location, color: Colors.green, size: 25), 2),
     myMarker(LatLng(48.631363, 6.107550),
-        const Icon(Icons.push_pin, color: Colors.green), 3),
+        const Icon(Icons.my_location, color: Colors.green, size: 25), 3),
     myMarker(LatLng(48.629963, 6.105150),
-        const Icon(Icons.push_pin, color: Colors.blue), 4),
-    myMarker(LatLng(48.630963, 6.107150), const Icon(Icons.my_location), null),
+        const Icon(Icons.my_location, color: Colors.blue, size: 25), 4),
   ];
 
   static List<CircleMarker> circles = [
@@ -121,11 +120,11 @@ class Global {
 
   static void pointChecking(id) {
     if (Global.markerList[id].type.color == Colors.blue) {
-      Global.markerList[id].type =
-          const Icon(Icons.push_pin_outlined, color: Colors.blue);
+      Global.markerList[id].type = const Icon(Icons.location_disabled_rounded,
+          color: Colors.blue, size: 25);
     } else {
-      Global.markerList[id].type =
-          const Icon(Icons.push_pin_outlined, color: Colors.green);
+      Global.markerList[id].type = const Icon(Icons.location_disabled_rounded,
+          color: Colors.green, size: 25);
     }
     if (Global.markerList[id].actualGoal) {
       var index = Global.parcoursList[Global.choixParcours].indexOf(id);
