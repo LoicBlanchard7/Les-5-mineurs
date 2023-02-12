@@ -32,7 +32,7 @@ class MyAppState extends State<AccueilPage> {
         child: Column(
           children: [
             const Text(
-              '\n\nBienvenue à la mines de neuves maison pour sa découverte en extérieur\n',
+              '\n\nBienvenue à la mines de Neuves Maison pour sa découverte en extérieur\n',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontWeight: FontWeight.bold,

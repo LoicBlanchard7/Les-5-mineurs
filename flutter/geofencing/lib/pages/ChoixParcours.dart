@@ -42,6 +42,20 @@ class _MyAppState extends State<ChoixParcours> {
               ),
             ),
             const Tableau(),
+            Container(
+              margin: const EdgeInsets.only(
+                  left: 50.0, right: 50.0, top: 30.0, bottom: 50.0),
+              child: const Text(
+                "Le prochain point conseillé s'affichera en rouge",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
+                  color: Colors.white,
+                  shadows: [Shadow(blurRadius: 3, color: Colors.black)],
+                ),
+              ),
+            ),
           ],
         ),
       ),

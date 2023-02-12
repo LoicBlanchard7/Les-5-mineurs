@@ -114,6 +114,7 @@ class _MyAppState extends State<MapPage> {
                         // currentLocation.longitude!),
                         center: LatLng(48.6295563, 6.107150),
                         zoom: 17,
+                        maxZoom: 18,
                       ),
                       children: [
                         TileLayer(
