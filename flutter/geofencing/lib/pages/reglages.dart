@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geofencing/pages/map.dart';
+import 'package:geofencing/pages/credit.dart';
 
 class ReglagePage extends StatefulWidget {
   const ReglagePage({super.key});
@@ -62,6 +63,24 @@ class MyAppState extends State<ReglagePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const MapPage()),
+                );
+              },
+            ),
+            const Text(''),
+            FloatingActionButton.extended(
+              label: const Text(
+                'Crédits',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 35,
+                ),
+              ), // <-- Text
+              backgroundColor: Colors.blue,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const CreditPage()),
                 );
               },
             ),
