@@ -25,7 +25,7 @@ class MyAppState extends State<ReglagePage> {
         child: Column(
           children: [
             Container(
-              margin: const EdgeInsets.only(top: 40, bottom: 300),
+              margin: const EdgeInsets.only(top: 50, bottom: 300),
               child: const Text(
                 'Paramètres',
                 textAlign: TextAlign.center,
@@ -38,51 +38,84 @@ class MyAppState extends State<ReglagePage> {
                 ),
               ),
             ),
-            FloatingActionButton.extended(
-              label: const Text(
-                'Mettre a jour les données',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
-              ), // <-- Text
-              backgroundColor: Colors.blue,
-              icon: const Icon(Icons.system_update, size: 40),
-              onPressed: () {},
-            ),
-            const Text(''),
-            FloatingActionButton.extended(
-              label: const Text(
-                'Retour à la carte',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 35,
+            Container(
+              margin: const EdgeInsets.only(left: 40, right: 40, bottom: 40),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: FloatingActionButton.extended(
+                    label: const Text(
+                      'Mettre a jour les données',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    backgroundColor: Colors.blue,
+                    icon: const Icon(Icons.system_update),
+                    onPressed: () {
+                      print('reload data');
+                    },
+                  ),
                 ),
-              ), // <-- Text
-              backgroundColor: Colors.blue,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const MapPage()),
-                );
-              },
+              ),
             ),
-            const Text(''),
-            FloatingActionButton.extended(
-              label: const Text(
-                'Crédits',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 35,
+            Container(
+              margin: const EdgeInsets.only(left: 40, right: 40, bottom: 40),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: FloatingActionButton.extended(
+                    label: const Text(
+                      'Retour à la carte',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                      ),
+                    ), // <-- Text
+                    backgroundColor: Colors.blue,
+                    // icon: const Icon(Icons.arrow_back_ios_sharp),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MapPage()),
+                      );
+                    },
+                  ),
                 ),
-              ), // <-- Text
-              backgroundColor: Colors.blue,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const CreditPage()),
-                );
-              },
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 40, right: 40),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: FloatingActionButton.extended(
+                    label: const Text(
+                      'Crédits',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 35,
+                      ),
+                    ), // <-- Text
+                    backgroundColor: Colors.blue,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const CreditPage()),
+                      );
+                    },
+                  ),
+                ),
+              ),
             ),
           ],
         ),

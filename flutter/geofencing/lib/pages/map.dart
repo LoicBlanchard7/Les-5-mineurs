@@ -111,7 +111,7 @@ class _MyAppState extends State<MapPage> {
                     return FlutterMap(
                       options: MapOptions(
                         // center: LatLng(currentLocation.latitude!,
-                        // currentLocation.longitude!),
+                        //     currentLocation.longitude!),
                         center: LatLng(48.6295563, 6.107150),
                         minZoom: 17,
                         maxZoom: 17,
@@ -139,84 +139,76 @@ class _MyAppState extends State<MapPage> {
                 },
               ),
             ),
-            Container(
-              // margin: const EdgeInsets.all(15.0),
-              padding:
-                  EdgeInsets.only(left: 100, right: 100, top: 10, bottom: 10),
-              decoration: BoxDecoration(
-                border: Border.all(
+          ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.black,
+            width: 5.0,
+          ),
+        ),
+        child: BottomNavigationBar(
+          backgroundColor: Color.fromARGB(255, 185, 184, 184),
+          fixedColor: Colors.black,
+          items: [
+            BottomNavigationBarItem(
+              label: "Parcours",
+              icon: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ChoixParcours()),
+                  );
+                },
+                child: Icon(
+                  Icons.route_outlined,
+                  size: 70,
                   color: Colors.black,
-                  width: 5.0,
                 ),
-                color: Color.fromARGB(255, 128, 183, 227),
               ),
-              child: Stack(
-                children: [
-                  // fond circulaire bouton camera
-                  Align(
-                    alignment: Alignment.center,
-                    child: Icon(
-                      Icons.circle,
-                      size: 70,
-                      color: Colors.black,
-                    ),
+            ),
+            BottomNavigationBarItem(
+              label: "QR Code",
+              icon: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(90)),
+                  color: Colors.black,
+                ),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const qrCodeScanner(title: 'Scan QR Code.')),
+                    );
+                  },
+                  child: Icon(
+                    Icons.cameraswitch_outlined,
+                    size: 70,
+                    color: Colors.white,
                   ),
-                  // BOUTON CAMERA
-                  Align(
-                    alignment: Alignment.center,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const qrCodeScanner(title: 'Scan QR Code.')),
-                        );
-                      },
-                      child: Icon(
-                        Icons.cameraswitch_outlined,
-                        size: 70,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  // BOUTON CHOIX PARCOURS
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ChoixParcours()),
-                        );
-                      },
-                      child: Icon(
-                        Icons.route_outlined,
-                        size: 70,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  // BOUTON REGLAGE
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ReglagePage()),
-                        );
-                      },
-                      child: Icon(
-                        Icons.settings,
-                        size: 70,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ],
+                ),
+              ),
+            ),
+            BottomNavigationBarItem(
+              label: "Paramètres",
+              icon: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ReglagePage()),
+                  );
+                },
+                child: Icon(
+                  Icons.settings,
+                  size: 70,
+                  color: Colors.black,
+                ),
               ),
             ),
           ],
