@@ -1,14 +1,15 @@
-// ignore_for_file: camel_case_types, prefer_typing_uninitialized_variables
+// ignore_for_file: camel_case_types, prefer_typing_uninitialized_variables, non_constant_identifier_names
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:geofencing/bdd/Parcours.dart';
 import 'package:latlong2/latlong.dart';
 
 class myMarker {
   LatLng localisation;
   Icon type;
-  var id;
+  int id;
   bool actualGoal;
   myMarker(this.localisation, this.type, this.id, [this.actualGoal = false]);
 }
@@ -20,6 +21,8 @@ class myDetail {
 }
 
 class Global {
+  static String LastUpdate = "2023-02-13T11:26:15";
+
   static int choixParcours = 0;
 
   static List<myMarker> markerList = [
@@ -61,11 +64,14 @@ class Global {
     ),
   ];
 
-  static List<List<int>> parcoursList = [
-    [],
-    [1],
-    [0, 3],
-    [0, 1, 2, 3],
+  // static List<List<int>> parcoursList = [
+  //   [],
+  //   [1],
+  //   [0, 3],
+  //   [0, 1, 2, 3],
+  // ];
+  static List<Parcours> parcoursList = [
+    Parcours(1, "P1", "01:30", [1, 2]),
   ];
 
   // /!\/!\/!\/!\/!\/!\ Si on ajoute une image elle doit figurer dans "pubspec.yalm" > flutter > assets
@@ -113,8 +119,8 @@ class Global {
     for (var marker in Global.markerList) {
       marker.actualGoal = false;
     }
-    if (Global.parcoursList[choix].isNotEmpty) {
-      Global.markerList[Global.parcoursList[choix][0]].actualGoal = true;
+    if (Global.parcoursList[choix] != null) {
+      Global.markerList[Global.parcoursList[choix].Etapes[0]].actualGoal = true;
     }
   }
 
@@ -127,14 +133,16 @@ class Global {
           color: Colors.green, size: 25);
     }
     if (Global.markerList[id].actualGoal) {
-      var index = Global.parcoursList[Global.choixParcours].indexOf(id);
+      var index = Global.parcoursList[Global.choixParcours].Etapes.indexOf(id);
       if (kDebugMode) {
         print(
             'id: $id - index : $index - choixParcours : ${Global.choixParcours}');
         print(Global.parcoursList[Global.choixParcours]);
       }
-      if (index + 1 < Global.parcoursList[Global.choixParcours].length) {
-        Global.markerList[Global.parcoursList[Global.choixParcours][index + 1]]
+      if (index + 1 < Global.parcoursList[Global.choixParcours].Etapes.length) {
+        Global
+            .markerList[
+                Global.parcoursList[Global.choixParcours].Etapes[index + 1]]
             .actualGoal = true;
       }
       Global.markerList[id].actualGoal = false;

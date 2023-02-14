@@ -11,7 +11,7 @@ import 'package:geofencing/pages/detailPointDInteret.dart';
 import 'package:geofencing/pages/scanQrCode.dart';
 import 'package:geofencing/pages/reglages.dart';
 
-Future<LocationData?> _currentLocation() async {
+Future<LocationData?> currentLocation() async {
   bool serviceEnabled;
   PermissionStatus permissionGranted;
 
@@ -45,13 +45,8 @@ class MapPage extends StatefulWidget {
 class _MyAppState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
-    List<Marker> setMarkerList(currentLocation) {
-      List<Marker> liste = [
-        Marker(
-          point: LatLng(currentLocation.latitude!, currentLocation.longitude!),
-          builder: (context) => Icon(Icons.location_history),
-        )
-      ];
+    List<Marker> setMarkerList() {
+      List<Marker> liste = [];
       for (var marker in Global.markerList) {
         if (marker.actualGoal) {
           liste.add(Marker(
@@ -104,45 +99,45 @@ class _MyAppState extends State<MapPage> {
           children: [
             Flexible(
               child: FutureBuilder<LocationData?>(
-                future: _currentLocation(),
+                // future: currentLocation(),
                 builder:
                     (BuildContext context, AsyncSnapshot<dynamic> snapchat) {
-                  if (snapchat.hasData) {
-                    final LocationData currentLocation = snapchat.data;
-                    return FlutterMap(
-                      options: MapOptions(
-                        center: LatLng(currentLocation.latitude!,
-                            currentLocation.longitude!),
-                        // center: LatLng(48.6295563, 6.107150),
-                        minZoom: 17,
-                        maxZoom: 17,
-                        zoom: 17,
+                  // if (snapchat.hasData) {
+                  // final LocationData currentLocation = snapchat.data;
+                  return FlutterMap(
+                    options: MapOptions(
+                      // center: LatLng(currentLocation.latitude!,
+                      //     currentLocation.longitude!),
+                      center: LatLng(48.6295563, 6.107150),
+                      minZoom: 17,
+                      maxZoom: 17,
+                      zoom: 17,
+                    ),
+                    // mapController: mapController,
+                    children: [
+                      TileLayer(
+                        urlTemplate:
+                            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                        subdomains: const ['a', 'b', 'c'],
                       ),
-                      // mapController: mapController,
-                      children: [
-                        TileLayer(
-                          urlTemplate:
-                              "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                          subdomains: const ['a', 'b', 'c'],
-                        ),
-                        CircleLayer(
-                          circles: Global.circles,
-                        ),
-                        PolygonLayer(
-                          polygons: Global.polygones,
-                        ),
-                        MarkerLayer(
-                          markers: setMarkerList(currentLocation),
-                        ),
-                        LocationMarkerLayer(
-                            position: LocationMarkerPosition(
-                                latitude: currentLocation.latitude!,
-                                longitude: currentLocation.longitude!,
-                                accuracy: currentLocation.accuracy!))
-                      ],
-                    );
-                  }
-                  return const Center(child: CircularProgressIndicator());
+                      CircleLayer(
+                        circles: Global.circles,
+                      ),
+                      PolygonLayer(
+                        polygons: Global.polygones,
+                      ),
+                      MarkerLayer(
+                        markers: setMarkerList(),
+                      ),
+                      // LocationMarkerLayer(
+                      //     position: LocationMarkerPosition(
+                      //         latitude: currentLocation.latitude!,
+                      //         longitude: currentLocation.longitude!,
+                      //         accuracy: currentLocation.accuracy!))
+                    ],
+                  );
+                  // }
+                  // return const Center(child: CircularProgressIndicator());
                 },
               ),
             ),
