@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, non_constant_identifier_names, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -110,13 +111,14 @@ class _MyAppState extends State<MapPage> {
                     final LocationData currentLocation = snapchat.data;
                     return FlutterMap(
                       options: MapOptions(
-                        // center: LatLng(currentLocation.latitude!,
-                        //     currentLocation.longitude!),
-                        center: LatLng(48.6295563, 6.107150),
+                        center: LatLng(currentLocation.latitude!,
+                            currentLocation.longitude!),
+                        // center: LatLng(48.6295563, 6.107150),
                         minZoom: 17,
                         maxZoom: 17,
                         zoom: 17,
                       ),
+                      // mapController: mapController,
                       children: [
                         TileLayer(
                           urlTemplate:
@@ -132,6 +134,11 @@ class _MyAppState extends State<MapPage> {
                         MarkerLayer(
                           markers: setMarkerList(currentLocation),
                         ),
+                        LocationMarkerLayer(
+                            position: LocationMarkerPosition(
+                                latitude: currentLocation.latitude!,
+                                longitude: currentLocation.longitude!,
+                                accuracy: currentLocation.accuracy!))
                       ],
                     );
                   }
