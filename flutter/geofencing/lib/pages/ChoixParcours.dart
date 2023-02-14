@@ -68,7 +68,7 @@ class _MyAppState extends State<ChoixParcours> {
 choixParcours(context, choix) {
   Global.selectParcours(choix);
   if (kDebugMode) {
-    print("Global.choixParcours ---> *${Global.choixParcours}*");
+    print("Global.choixParcours ----------------> *${Global.choixParcours}*");
   }
   Navigator.push(
     context,

@@ -1,9 +1,9 @@
 // ignore_for_file: camel_case_types, prefer_typing_uninitialized_variables, non_constant_identifier_names
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geofencing/bdd/Parcours.dart';
+import 'package:geofencing/bdd/Parcours_Points.dart';
 import 'package:latlong2/latlong.dart';
 
 class myMarker {
@@ -71,9 +71,52 @@ class Global {
   //   [0, 1, 2, 3],
   // ];
   static List<Parcours> parcoursList = [
-    Parcours(1, "P1", "1h30min", [1, 2]),
-    Parcours(2, "P2", "3h", [3, 4, 1, 2]),
+    Parcours(1, "P1", "1h30min", [13, 14]),
+    Parcours(2, "P2", "3h", [15, 16, 17, 18]),
   ];
+
+  static List<Parcours_Points> parcoursPointsList = [
+    Parcours_Points(13, 5, 1),
+    Parcours_Points(14, 5, 2),
+    Parcours_Points(15, 6, 3),
+    Parcours_Points(16, 6, 4),
+    Parcours_Points(17, 6, 2),
+    Parcours_Points(18, 6, 1),
+  ];
+
+  static int getParcoursIndexFromId(int parcoursId) {
+    int toReturn = 0;
+    int i = 0;
+    for (var parcour in parcoursList) {
+      if (parcour.id == parcoursId) {
+        toReturn = i;
+      }
+      i++;
+    }
+    return toReturn;
+  }
+
+  static int getPointFromParcour(int idParcourPoint) {
+    int toReturn = 1;
+    for (var element in parcoursPointsList) {
+      if (element.id == idParcourPoint) {
+        toReturn = element.Points_id;
+      }
+    }
+    return toReturn;
+  }
+
+  static int getPointInParcour(int idPoint) {
+    int toReturn = 1;
+    for (var element in parcoursPointsList) {
+      if ((element.Points_id == idPoint) &&
+          (Global.choixParcours ==
+              getParcoursIndexFromId(element.Parcours_id))) {
+        toReturn = element.id;
+      }
+    }
+    return toReturn;
+  }
 
   // /!\/!\/!\/!\/!\/!\ Si on ajoute une image elle doit figurer dans "pubspec.yalm" > flutter > assets
   static List<List<myDetail>> detailsList = [
@@ -121,10 +164,13 @@ class Global {
       marker.actualGoal = false;
     }
     if (choix != -1) {
-      Global.markerList[Global.parcoursList[choix].Etapes[0]].actualGoal = true;
+      Global
+          .markerList[getPointFromParcour(Global.parcoursList[choix].Etapes[0])]
+          .actualGoal = true;
     }
   }
 
+  // beug lorsqu'on entre dans if .actualGoal
   static void pointChecking(id) {
     if (Global.markerList[id].type.color == Colors.blue) {
       Global.markerList[id].type = const Icon(Icons.location_disabled_rounded,
@@ -134,16 +180,18 @@ class Global {
           color: Colors.green, size: 25);
     }
     if (Global.markerList[id].actualGoal) {
-      var index = Global.parcoursList[Global.choixParcours].Etapes.indexOf(id);
-      if (kDebugMode) {
-        print(
-            'id: $id - index : $index - choixParcours : ${Global.choixParcours}');
-        print(Global.parcoursList[Global.choixParcours]);
+      var index;
+      int i = 0;
+      for (var etape in Global.parcoursList[Global.choixParcours].Etapes) {
+        if (getPointFromParcour(etape) == id) {
+          index = i;
+        }
+        i++;
       }
       if (index + 1 < Global.parcoursList[Global.choixParcours].Etapes.length) {
         Global
-            .markerList[
-                Global.parcoursList[Global.choixParcours].Etapes[index + 1]]
+            .markerList[getPointFromParcour(
+                Global.parcoursList[Global.choixParcours].Etapes[index + 1])]
             .actualGoal = true;
       }
       Global.markerList[id].actualGoal = false;
