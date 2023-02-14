@@ -71,7 +71,8 @@ class Global {
   //   [0, 1, 2, 3],
   // ];
   static List<Parcours> parcoursList = [
-    Parcours(1, "P1", "01:30", [1, 2]),
+    Parcours(1, "P1", "1h30min", [1, 2]),
+    Parcours(2, "P2", "3h", [3, 4, 1, 2]),
   ];
 
   // /!\/!\/!\/!\/!\/!\ Si on ajoute une image elle doit figurer dans "pubspec.yalm" > flutter > assets
@@ -119,7 +120,7 @@ class Global {
     for (var marker in Global.markerList) {
       marker.actualGoal = false;
     }
-    if (Global.parcoursList[choix] != null) {
+    if (choix != -1) {
       Global.markerList[Global.parcoursList[choix].Etapes[0]].actualGoal = true;
     }
   }
