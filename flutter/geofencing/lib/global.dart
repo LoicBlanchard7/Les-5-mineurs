@@ -6,6 +6,7 @@ import 'package:geofencing/bdd/Parcours.dart';
 import 'package:geofencing/bdd/Parcours_Points.dart';
 import 'package:latlong2/latlong.dart';
 
+import 'bdd/Point.dart';
 import 'bdd/Zone.dart';
 
 class myMarker {
@@ -27,17 +28,67 @@ class Global {
 
   static int choixParcours = 0;
 
-  static List<myMarker> markerList = [
-    myMarker(LatLng(48.630963, 6.108150),
-        const Icon(Icons.my_location, color: Colors.blue, size: 25), 0),
-    myMarker(LatLng(48.630963, 6.107850),
-        const Icon(Icons.my_location, color: Colors.green, size: 25), 1),
-    myMarker(LatLng(48.631974, 6.108140),
-        const Icon(Icons.my_location, color: Colors.green, size: 25), 2),
-    myMarker(LatLng(48.631363, 6.107550),
-        const Icon(Icons.my_location, color: Colors.green, size: 25), 3),
-    myMarker(LatLng(48.629963, 6.105150),
-        const Icon(Icons.my_location, color: Colors.blue, size: 25), 4),
+  // static List<myMarker> markerList = [
+  //   myMarker(LatLng(48.630963, 6.108150),
+  //       const Icon(Icons.my_location, color: Colors.blue, size: 25), 0),
+  //   myMarker(LatLng(48.630963, 6.107850),
+  //       const Icon(Icons.my_location, color: Colors.green, size: 25), 1),
+  //   myMarker(LatLng(48.631974, 6.108140),
+  //       const Icon(Icons.my_location, color: Colors.green, size: 25), 2),
+  //   myMarker(LatLng(48.631363, 6.107550),
+  //       const Icon(Icons.my_location, color: Colors.green, size: 25), 3),
+  //   myMarker(LatLng(48.629963, 6.105150),
+  //       const Icon(Icons.my_location, color: Colors.blue, size: 25), 4),
+  // ];
+  static List<Point> pointsList = [
+    Point(
+      1,
+      "Point 1",
+      '',
+      "Point",
+      [6.108984540809615, 48.63241025622807],
+      [],
+      [1],
+    ),
+    Point(
+      2,
+      "Point 2",
+      '',
+      "Point",
+      [6.108300434237549, 48.632316868572445],
+      [
+        Video("Test", "Je suis une url"),
+        Video("jiopdjzopqjfzl", "hiofzqhfipq")
+      ],
+      [],
+    ),
+    Point(
+      3,
+      "Sortie n°2",
+      "Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text.",
+      "Point",
+      [6.106774769895878, 48.63099919806004],
+      [Video("video", "https://youtu.be/nXniDOo3Y0c")],
+      [],
+    ),
+    Point(
+      4,
+      "Accumulateur",
+      "Lorem Ipsum is simply. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+      "Point",
+      [6.10794169355816, 48.63182594598956],
+      [],
+      [],
+    ),
+    Point(
+      6,
+      "test 2",
+      "bbbb",
+      "Point",
+      [6.10859101354464, 48.631440158823494],
+      [],
+      [],
+    ),
   ];
 
   // static List<CircleMarker> circles = [
@@ -229,26 +280,30 @@ class Global {
 
   static void selectParcours(choix) {
     Global.choixParcours = choix;
-    for (var marker in Global.markerList) {
+    for (var marker in Global.pointsList) {
       marker.actualGoal = false;
     }
     if (choix != -1) {
       Global
-          .markerList[getPointFromParcour(Global.parcoursList[choix].Etapes[0])]
+          .pointsList[
+              getPointFromParcour(Global.parcoursList[choix].Etapes[0]) - 1]
           .actualGoal = true;
     }
   }
 
-  // beug lorsqu'on entre dans if .actualGoal
   static void pointChecking(id) {
-    if (Global.markerList[id].type.color == Colors.blue) {
-      Global.markerList[id].type = const Icon(Icons.location_disabled_rounded,
-          color: Colors.blue, size: 25);
+    if (Global.pointsList[id - 1].icon.color == Colors.blue) {
+      Global.pointsList[id - 1].icon = const Icon(
+          Icons.location_disabled_rounded,
+          color: Colors.blue,
+          size: 25);
     } else {
-      Global.markerList[id].type = const Icon(Icons.location_disabled_rounded,
-          color: Colors.green, size: 25);
+      Global.pointsList[id - 1].icon = const Icon(
+          Icons.location_disabled_rounded,
+          color: Colors.green,
+          size: 25);
     }
-    if (Global.markerList[id].actualGoal) {
+    if (Global.pointsList[id - 1].actualGoal) {
       var index;
       int i = 0;
       for (var etape in Global.parcoursList[Global.choixParcours].Etapes) {
@@ -259,11 +314,24 @@ class Global {
       }
       if (index + 1 < Global.parcoursList[Global.choixParcours].Etapes.length) {
         Global
-            .markerList[getPointFromParcour(
-                Global.parcoursList[Global.choixParcours].Etapes[index + 1])]
+            .pointsList[getPointFromParcour(Global
+                    .parcoursList[Global.choixParcours].Etapes[index + 1]) -
+                1]
             .actualGoal = true;
       }
-      Global.markerList[id].actualGoal = false;
+      Global.pointsList[id - 1].actualGoal = false;
+    }
+  }
+
+  static void changePointToZonePoint() {
+    for (var zone in Global.zonesList) {
+      if (zone.Point_associe.isNotEmpty) {
+        for (var point in zone.Point_associe) {
+          print('Point : $point - id : ${Global.pointsList[point - 1].id}');
+          Global.pointsList[point - 1].icon =
+              const Icon(Icons.my_location, color: Colors.blue, size: 25);
+        }
+      }
     }
   }
 }

@@ -47,10 +47,10 @@ class _MyAppState extends State<MapPage> {
   Widget build(BuildContext context) {
     List<Marker> setMarkerList() {
       List<Marker> liste = [];
-      for (var marker in Global.markerList) {
+      for (var marker in Global.pointsList) {
         if (marker.actualGoal) {
           liste.add(Marker(
-            point: marker.localisation,
+            point: LatLng(marker.coordinates[1], marker.coordinates[0]),
             builder: (context) => IconButton(
               icon: Icon(
                 Icons.my_location,
@@ -69,14 +69,14 @@ class _MyAppState extends State<MapPage> {
         } else {
           if (marker.id == null) {
             liste.add(Marker(
-              point: marker.localisation,
+              point: LatLng(marker.coordinates[1], marker.coordinates[0]),
               builder: (context) => Icon(Icons.my_location),
             ));
           } else {
             liste.add(Marker(
-                point: marker.localisation,
+                point: LatLng(marker.coordinates[1], marker.coordinates[0]),
                 builder: (context) => GestureDetector(
-                      child: marker.type,
+                      child: marker.icon,
                       onTap: () {
                         Navigator.push(
                           context,
