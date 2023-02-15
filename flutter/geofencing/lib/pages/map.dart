@@ -121,10 +121,12 @@ class _MyAppState extends State<MapPage> {
                         subdomains: const ['a', 'b', 'c'],
                       ),
                       CircleLayer(
-                        circles: Global.circles,
+                        // circles: Global.circles,
+                        circles: Global.getCircles(),
                       ),
                       PolygonLayer(
-                        polygons: Global.polygones,
+                        // polygons: Global.polygones,
+                        polygons: Global.getPolygons(),
                       ),
                       MarkerLayer(
                         markers: setMarkerList(),

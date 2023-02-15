@@ -6,6 +6,8 @@ import 'package:geofencing/bdd/Parcours.dart';
 import 'package:geofencing/bdd/Parcours_Points.dart';
 import 'package:latlong2/latlong.dart';
 
+import 'bdd/Zone.dart';
+
 class myMarker {
   LatLng localisation;
   Icon type;
@@ -38,31 +40,98 @@ class Global {
         const Icon(Icons.my_location, color: Colors.blue, size: 25), 4),
   ];
 
-  static List<CircleMarker> circles = [
-    CircleMarker(
-      point: LatLng(48.629963, 6.105150),
-      radius: 25,
-      useRadiusInMeter: true,
-      color: const Color.fromRGBO(33, 150, 243, 0.2),
-      borderStrokeWidth: 1.0,
-      borderColor: Colors.blue,
-    ),
+  // static List<CircleMarker> circles = [
+  //   CircleMarker(
+  //     point: LatLng(48.629963, 6.105150),
+  //     radius: 25,
+  //     useRadiusInMeter: true,
+  //     color: const Color.fromRGBO(33, 150, 243, 0.2),
+  //     borderStrokeWidth: 1.0,
+  //     borderColor: Colors.blue,
+  //   ),
+  // ];
+
+  // static List<Polygon> polygones = [
+  //   Polygon(
+  //     points: [
+  //       LatLng(48.630763, 6.107150),
+  //       LatLng(48.630763, 6.107750),
+  //       LatLng(48.630363, 6.107550),
+  //       LatLng(48.630563, 6.107150),
+  //     ],
+  //     color: const Color.fromRGBO(33, 150, 243, 0.2),
+  //     isFilled: true,
+  //     borderStrokeWidth: 1.0,
+  //     borderColor: Colors.blue,
+  //   ),
+  // ];
+  static List<Zone> zonesList = [
+    Zone(1, "Z1", "Polygon", [
+      [6.10871480295512, 48.63246285404148],
+      [6.108598872116033, 48.63223300204797],
+      [6.10909283830145, 48.632213014868825],
+      [6.109097878772701, 48.632389568012485],
+      [6.109259173853701, 48.63258943875064],
+      [6.108921462278005, 48.63264273748041],
+      [6.10871480295512, 48.63246285404148]
+    ], [
+      1
+    ]),
+    Zone(2, "zone accumulateur", "Polygon", [
+      [6.107441055388648, 48.63148895480714],
+      [6.107687833555275, 48.6309857851125],
+      [6.107346544601569, 48.63089903121008],
+      [6.107262535012978, 48.631093359744824],
+      [6.10713652063049, 48.63106906871914],
+      [6.107057761641102, 48.63120787442392],
+      [6.107178525424331, 48.63123216538335],
+      [6.107110267633459, 48.63140567189413],
+      [6.107441055388648, 48.63148895480714]
+    ], [
+      2
+    ]),
   ];
 
-  static List<Polygon> polygones = [
-    Polygon(
-      points: [
-        LatLng(48.630763, 6.107150),
-        LatLng(48.630763, 6.107750),
-        LatLng(48.630363, 6.107550),
-        LatLng(48.630563, 6.107150),
-      ],
-      color: const Color.fromRGBO(33, 150, 243, 0.2),
-      isFilled: true,
-      borderStrokeWidth: 1.0,
-      borderColor: Colors.blue,
-    ),
-  ];
+  static List<CircleMarker> getCircles() {
+    List<CircleMarker> toReturn = [];
+    for (var zone in Global.zonesList) {
+      if (zone.type == "Circle") {
+        toReturn.add(
+          CircleMarker(
+            point: LatLng(zone.coordinate[0], zone.coordinate[1]),
+            radius: zone.radius,
+            useRadiusInMeter: true,
+            color: const Color.fromRGBO(33, 150, 243, 0.2),
+            borderStrokeWidth: 1.0,
+            borderColor: Colors.blue,
+          ),
+        );
+      }
+    }
+    return toReturn;
+  }
+
+  static List<Polygon> getPolygons() {
+    List<Polygon> toReturn = [];
+    for (var zone in Global.zonesList) {
+      if (zone.type == "Polygon") {
+        List<LatLng> points = [];
+        for (var point in zone.coordinates) {
+          points.add(LatLng(point[1], point[0]));
+        }
+        toReturn.add(Polygon(
+          points: points,
+          color: const Color.fromRGBO(33, 150, 243, 0.2),
+          isFilled: true,
+          borderStrokeWidth: 1.0,
+          borderColor: Colors.blue,
+        ));
+      }
+    }
+    print('toReturn - polygones');
+    print(toReturn);
+    return toReturn;
+  }
 
   // static List<List<int>> parcoursList = [
   //   [],
