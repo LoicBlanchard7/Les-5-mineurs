@@ -59,7 +59,7 @@ class _MyPageState extends State<qrCodeScanner> {
             Center(
               child: (result != null)
                   ? ElevatedButton(
-                      child: const Text('Informations du point'),
+                      child: Text('Informations du point ${result!.code}'),
                       onPressed: () {
                         Navigator.push(
                           context,
