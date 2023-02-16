@@ -1,5 +1,3 @@
-// ignore_for_file: file_names
-
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -22,32 +20,78 @@ void main() async {
     // When the database is first created, create a table to store dogs.
     onCreate: (db, version) {
       // Run the CREATE TABLE statement on the database.
-      db.execute(
-        'CREATE TABLE etat(idEtat INTEGER PRIMARY KEY, lastUpdate Date);',
-      ); // Fait
-      db.execute(
-        'CREATE TABLE parcours(idParcours INTEGER PRIMARY KEY, titre TEXT, duree TEXT);',
-      ); // Fait
-      db.execute(
-        'CREATE TABLE parcoursPoints(idParcoursPoints INTEGER PRIMARY KEY, idPoint INTEGER FOREIGN KEY, idParcour INTEGER FOREIGN KEY);',
-      ); // Fait
-      db.execute(
-        'CREATE TABLE points(idPoint INTEGER PRIMARY KEY, titre TEXT, contenu TEXT, posX TEXT, posY TEXT, images TEXT, URL_video TEXT);',
-      ); // Fait
-      db.execute(
-        'CREATE TABLE pointsFiles(idPointsFiles INTEGER PRIMARY KEY, idPoint INTEGER FOREIGN KEY, idDirectus TEXT);',
-      ); // Fait
-      db.execute(
-        'CREATE TABLE zones(idZone INTEGER PRIMARY KEY, titre TEXT, idPoint INTEGER FOREIGN KEY);',
-      ); // Fait
-      db.execute(
-        'CREATE TABLE coordonnees(idCoo INTEGER PRIMARY KEY, idZone INTEGER FOREIGN KEY, PosX TEXT, PosY TEXT);',
-      ); // Fait
-      db.execute(
-        'CREATE TABLE zonesPoint(idZonePoint INTEGER PRIMARY KEY, idZone INTEGER FOREIGN KEY, item TEXT, collection TEXT);',
-      ); // Fait
+      db.execute('''
+        CREATE TABLE etat(
+          idEtat INTEGER PRIMARY KEY, 
+          lastUpdate Date
+        );
+      '''); // Fait
+      db.execute('''
+        CREATE TABLE parcours(
+          idParcours INTEGER PRIMARY KEY, 
+          titre STRING NOT NULL, 
+          duree STRING NOT NULL
+        );
+      '''); // Fait
+      db.execute('''
+        CREATE TABLE parcoursPoints(
+        idParcoursPoints INTEGER PRIMARY KEY AUTOINCREMENT,
+        idPoint INTEGER, 
+        idParcour INTEGER,
+        FOREIGN KEY (idPoint) REFERENCES points (idPoint),
+        FOREIGN KEY (idParcour) REFERENCES parcours (idParcours)
+        );
+      '''); // Fait
+
+      db.execute('''
+        CREATE TABLE points(
+          idPoint INTEGER PRIMARY KEY AUTOINCREMENT, 
+          titre STRING NOT NULL, 
+          contenu STRING NOT NULL, 
+          posX double, 
+          posY double, 
+          images STRING NOT NULL, 
+          url_video STRING NOT NULL
+          );
+      '''); // Fait
+
+      db.execute('''
+        CREATE TABLE pointsFiles(
+          idPointsFiles INTEGER PRIMARY KEY, 
+          idPoint INTEGER, 
+          idDirectus STRING NOT NULL,
+          FOREIGN KEY (idPoint) REFERENCES points (idPoint)
+        );
+      '''); // Fait
+
+      db.execute('''
+        CREATE TABLE zones(
+          idZone INTEGER PRIMARY KEY, 
+          titre STRING NOT NULL, 
+          idPoint INTEGER,
+          FOREIGN KEY (idPoint) REFERENCES points (idPoint)
+        );
+      '''); // Fait
+      db.execute('''
+        CREATE TABLE coordonnees(
+          idCoo INTEGER PRIMARY KEY, 
+          idZone INTEGER, 
+          posX double, 
+          posY double,
+          FOREIGN KEY (idZone) REFERENCES zones (idZone)
+        );
+      '''); // Fait
+      db.execute('''
+        CREATE TABLE zonesPoint(
+          idZonePoint INTEGER PRIMARY KEY, 
+          idZone INTEGER, 
+          item STRING NOT NULL, 
+          collection STRING NOT NULL,
+          FOREIGN KEY (idZone) REFERENCES zones (idZone)
+        );
+      '''); // Fait
       return db.execute(
-        'CREATE TABLE dogs(id INTEGER PRIMARY KEY, name TEXT, age INTEGER);',
+        'CREATE TABLE dogs(id INTEGER PRIMARY KEY, name STRING NOT NULL, age INTEGER);',
       ); // Fait
     },
     // Set the version. This executes the onCreate function and provides a
@@ -420,7 +464,7 @@ void main() async {
           posX: maps[i]['posX'],
           posY: maps[i]['posY'],
           images: maps[i]['images'],
-          urlVideo: maps[i]['urlVideo']);
+          url_video: maps[i]['url_video']);
     });
   }
 
@@ -517,10 +561,10 @@ void main() async {
     idPoint: 0,
     titre: 'Moyen-Âge',
     contenu: "Bahaha alors le moyene âge c'est un truc de dingue",
-    posX: "2",
-    posY: "2",
+    posX: 3.4,
+    posY: 2.5,
     images: "yapa.png",
-    urlVideo: "https://www.youtube.com/watch?v=TWMEdqBYIxU",
+    url_video: "https://www.youtube.com/watch?v=TWMEdqBYIxU",
   );
   await insertPoints(point1);
   if (kDebugMode) {
@@ -531,10 +575,10 @@ void main() async {
     idPoint: 0,
     titre: 'points2',
     contenu: "CC c'est le contenu",
-    posX: "2,14",
-    posY: "2,190",
+    posX: 2.14,
+    posY: 2.190,
     images: " lien.png",
-    urlVideo: " https://www.youtube.com/watch?v=TWMEdqBYIxU",
+    url_video: " https://www.youtube.com/watch?v=TWMEdqBYIxU",
   );
 
   await insertPoints(points2);
@@ -648,10 +692,10 @@ class Points {
   final int idPoint;
   final String titre;
   final String contenu;
-  final String posX;
-  final String posY;
+  final double posX;
+  final double posY;
   final String images;
-  final String urlVideo;
+  final String url_video;
 
   const Points({
     required this.idPoint,
@@ -660,7 +704,7 @@ class Points {
     required this.posX,
     required this.posY,
     required this.images,
-    required this.urlVideo,
+    required this.url_video,
   });
 
   Map<String, dynamic> toMap() {
@@ -671,13 +715,13 @@ class Points {
       'posX': posX,
       'posY': posY,
       'images': images,
-      'urlVideo': urlVideo,
+      'url_video': url_video,
     };
   }
 
   @override
   String toString() {
-    return 'Points{idPoint: $idPoint, titre: $titre , contenu: $contenu , posX: $posX, posY: $posY , images: $images, urlVideo: $urlVideo   }';
+    return 'Points{idPoint: $idPoint, titre: $titre , contenu: $contenu , posX: $posX, posY: $posY , images: $images, url_video: $url_video   }';
   }
 }
 
@@ -734,8 +778,8 @@ class Zones {
 class Coordonnees {
   final int idCoo;
   final int idZone;
-  final String posX;
-  final String posY;
+  final double posX;
+  final double posY;
 
   const Coordonnees({
     required this.idCoo,
