@@ -1,6 +1,9 @@
+// ignore_for_file: file_names
+
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -9,6 +12,7 @@ void main() async {
   // Avoid errors caused by flutter upgrade.
   // Importing 'package:flutter/widgets.dart' is required.
   WidgetsFlutterBinding.ensureInitialized();
+
   // Open the database and store the reference.
   final database = openDatabase(
     // Set the path to the database. Note: Using the `join` function from the
@@ -485,7 +489,8 @@ void main() async {
   await insertDog(fido);
 
   // Now, use the method above to retrieve all the dogs.
-  print(await dogs()); // Prints a list that include Fido.
+  print(await dogs());
+  print("truc");
 
   // Update Fido's age and save it to the database.
   fido = Dog(
@@ -496,13 +501,17 @@ void main() async {
   await updateDog(fido);
 
   // Print the updated results.
-  print(await dogs()); // Prints Fido with age 42.
+  if (kDebugMode) {
+    print(await dogs());
+  } // Prints Fido with age 42.
 
   // Delete Fido from the database.
   await deleteDog(fido.id);
 
   // Print the list of dogs (empty).
-  print(await dogs());
+  if (kDebugMode) {
+    print(await dogs());
+  }
 
   var point1 = const Points(
     idPoint: 0,
@@ -515,7 +524,7 @@ void main() async {
   );
   await insertPoints(point1);
   if (kDebugMode) {
-    print(await dogs());
+    print(await listPoints());
   }
 
   var points2 = const Points(
@@ -530,7 +539,7 @@ void main() async {
 
   await insertPoints(points2);
   if (kDebugMode) {
-    print(await dogs());
+    print(await listPoints());
   }
 }
 
