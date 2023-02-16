@@ -1,4 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api, file_names, camel_case_types, must_be_immutable, no_logic_in_create_state
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:geofencing/global.dart';
 import 'package:geofencing/pages/youtubePlayer.dart';
@@ -85,14 +87,35 @@ List<TableRow> contenuAffichage(
   List<TableRow> contenu = [];
   // images
   for (var image in Global.pointsList[Global.getIndexOfPointById(id)].Images) {
+    String link =
+        'http://docketu.iutnc.univ-lorraine.fr:51080/assets/${Global.getDirectusIdFromFilesId(image, id)}';
     contenu.add(
       TableRow(
         children: [
           Text(
-            'id image : $image -> NOM_DE_L_IMAGE !!!!!!!!!!!!',
-            textAlign: TextAlign.justify,
-            style:
-                DefaultTextStyle.of(context).style.apply(fontSizeFactor: 2.0),
+            'id image : $image -> ${Global.getDirectusIdFromFilesId(image, id)} \n url : $link',
+          ),
+        ],
+      ),
+    );
+    contenu.add(
+      TableRow(
+        children: [
+          Image.network(
+            link,
+            fit: BoxFit.contain,
+          ),
+          // Image.network(link),
+          // Image.network(
+          //     'http://docketu.iutnc.univ-lorraine.fr:51080/assets/${Global.getDirectusIdFromFilesId(image, id)}'),
+        ],
+      ),
+    );
+    contenu.add(
+      TableRow(
+        children: [
+          Text(
+            'id image : $image -> ${Global.getDirectusIdFromFilesId(image, id)} \n url : $link',
           ),
         ],
       ),

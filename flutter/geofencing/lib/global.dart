@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geofencing/bdd/Parcours.dart';
 import 'package:geofencing/bdd/Parcours_Points.dart';
+import 'package:geofencing/bdd/Points_files.dart';
 import 'package:geofencing/bdd/Zones_Point_associe.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -90,6 +91,15 @@ class Global {
       [],
       [],
     ),
+  ];
+
+  static List<Points_files> pointsFilesList = [
+    Points_files(
+      id: 1,
+      Points_id: 1,
+      directus_files_id: "324204b8-10d4-496c-9bc0-e43c8924540c",
+      id_point: null,
+    )
   ];
 
   // static List<CircleMarker> circles = [
@@ -208,6 +218,16 @@ class Global {
     Parcours_Points(18, 6, 1),
   ];
 
+  static String getDirectusIdFromFilesId(int fileId, int pointId) {
+    String toReturn = "";
+    for (var file in Global.pointsFilesList) {
+      if ((file.id == fileId) && (file.Points_id == pointId)) {
+        toReturn = file.directus_files_id;
+      }
+    }
+    return toReturn;
+  }
+
   static int getParcoursIndexFromId(int parcoursId) {
     int toReturn = 0;
     int i = 0;
@@ -242,7 +262,6 @@ class Global {
     return toReturn;
   }
 
-// TODO
   static int getIndexOfPointById(int idPoint) {
     int toReturn = -1;
     int index = 0;
@@ -255,11 +274,10 @@ class Global {
     return toReturn;
   }
 
-// TODO
   static int getPointIdByFromZone(int Point_associe) {
     int toReturn = -1;
     for (var association in Global.zonesPointAssocieList) {
-      if (int.parse(association.item) == Point_associe) {
+      if (association.id == Point_associe) {
         toReturn = int.parse(association.item);
       }
     }
@@ -356,7 +374,8 @@ class Global {
     for (var zone in Global.zonesList) {
       if (zone.Point_associe.isNotEmpty) {
         for (var point in zone.Point_associe) {
-          Global.pointsList[point - 1].icon =
+          Global.pointsList[getIndexOfPointById(getPointIdByFromZone(point))]
+                  .icon =
               const Icon(Icons.my_location, color: Colors.blue, size: 25);
         }
       }
