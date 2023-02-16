@@ -67,26 +67,19 @@ class _MyAppState extends State<MapPage> {
             ),
           ));
         } else {
-          if (marker.id == null) {
-            liste.add(Marker(
+          liste.add(Marker(
               point: LatLng(marker.coordinates[1], marker.coordinates[0]),
-              builder: (context) => Icon(Icons.my_location),
-            ));
-          } else {
-            liste.add(Marker(
-                point: LatLng(marker.coordinates[1], marker.coordinates[0]),
-                builder: (context) => GestureDetector(
-                      child: marker.icon,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  detailPointDInteret(marker.id)),
-                        );
-                      },
-                    )));
-          }
+              builder: (context) => GestureDetector(
+                    child: marker.icon,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                detailPointDInteret(marker.id)),
+                      );
+                    },
+                  )));
         }
       }
 

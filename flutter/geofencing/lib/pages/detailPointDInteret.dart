@@ -47,7 +47,8 @@ class _MyAppState extends State<detailPointDInteret> {
           toolbarHeight: 120,
           centerTitle: true,
           title: Text(
-            Global.detailsList[id][0].data,
+            Global.pointsList[Global.getIndexOfPointById(id)].Titre,
+            // Global.detailsList[id][0].data,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 50,
@@ -82,48 +83,89 @@ class Affichage extends StatelessWidget {
 List<TableRow> contenuAffichage(
     BuildContext context, int id, List<YoutubePlayerScaffold> playersList) {
   List<TableRow> contenu = [];
-  for (var element in Global.detailsList[id]) {
-    switch (element.type) {
-      case "txt":
-        contenu.add(
-          TableRow(
-            children: [
-              Text(
-                element.data,
-                textAlign: TextAlign.justify,
-                style: DefaultTextStyle.of(context)
-                    .style
-                    .apply(fontSizeFactor: 2.0),
-              ),
-            ],
+  // images
+  for (var image in Global.pointsList[Global.getIndexOfPointById(id)].Images) {
+    contenu.add(
+      TableRow(
+        children: [
+          Text(
+            'id image : $image -> NOM_DE_L_IMAGE !!!!!!!!!!!!',
+            textAlign: TextAlign.justify,
+            style:
+                DefaultTextStyle.of(context).style.apply(fontSizeFactor: 2.0),
           ),
-        );
-        break;
-      case "img":
-        contenu.add(
-          TableRow(
-            children: [
-              Image.asset(
-                'assets/${element.data}',
-                fit: BoxFit.contain,
-              )
-            ],
-          ),
-        );
-        break;
-      case "mp4":
-        YoutubePlayerScaffold player = YoutubePlayerScaffold(element.data);
-        player.initState();
-        contenu.add(
-          TableRow(
-            children: [
-              player.build(context),
-            ],
-          ),
-        );
-        playersList.add(player);
-        break;
-    }
+        ],
+      ),
+    );
   }
+  // contenu
+  contenu.add(
+    TableRow(
+      children: [
+        Text(
+          Global.pointsList[Global.getIndexOfPointById(id)].Contenu,
+          textAlign: TextAlign.justify,
+          style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 2.0),
+        ),
+      ],
+    ),
+  );
+  // videos
+  for (var video
+      in Global.pointsList[Global.getIndexOfPointById(id)].URL_video) {
+    YoutubePlayerScaffold player = YoutubePlayerScaffold(video.Url);
+    player.initState();
+    contenu.add(
+      TableRow(
+        children: [
+          player.build(context),
+        ],
+      ),
+    );
+    playersList.add(player);
+  }
+  // for (var element in Global.detailsList[id]) {
+  //   switch (element.type) {
+  //     case "txt":
+  //       contenu.add(
+  //         TableRow(
+  //           children: [
+  //             Text(
+  //               element.data,
+  //               textAlign: TextAlign.justify,
+  //               style: DefaultTextStyle.of(context)
+  //                   .style
+  //                   .apply(fontSizeFactor: 2.0),
+  //             ),
+  //           ],
+  //         ),
+  //       );
+  //       break;
+  //     case "img":
+  //       contenu.add(
+  //         TableRow(
+  //           children: [
+  //             Image.asset(
+  //               'assets/${element.data}',
+  //               fit: BoxFit.contain,
+  //             )
+  //           ],
+  //         ),
+  //       );
+  //       break;
+  //     case "mp4":
+  //       YoutubePlayerScaffold player = YoutubePlayerScaffold(element.data);
+  //       player.initState();
+  //       contenu.add(
+  //         TableRow(
+  //           children: [
+  //             player.build(context),
+  //           ],
+  //         ),
+  //       );
+  //       playersList.add(player);
+  //       break;
+  //   }
+  // }
   return contenu;
 }

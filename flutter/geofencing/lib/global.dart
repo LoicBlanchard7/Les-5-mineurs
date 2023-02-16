@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geofencing/bdd/Parcours.dart';
 import 'package:geofencing/bdd/Parcours_Points.dart';
+import 'package:geofencing/bdd/Zones_Point_associe.dart';
 import 'package:latlong2/latlong.dart';
 
 import 'bdd/Point.dart';
@@ -57,8 +58,8 @@ class Global {
       "Point",
       [6.108300434237549, 48.632316868572445],
       [
-        Video("Test", "Je suis une url"),
-        Video("jiopdjzopqjfzl", "hiofzqhfipq")
+        Video("Test", "https://youtu.be/nXniDOo3Y0c"),
+        Video("jiopdjzopqjfzl", "https://youtu.be/nXniDOo3Y0c")
       ],
       [],
     ),
@@ -143,6 +144,11 @@ class Global {
     ]),
   ];
 
+  static List<Zones_Point_associe> zonesPointAssocieList = [
+    Zones_Point_associe(id: 1, Zones_id: 1, item: "1", collection: "Points"),
+    Zones_Point_associe(id: 2, Zones_id: 2, item: "3", collection: "Points"),
+  ];
+
   static List<CircleMarker> getCircles() {
     List<CircleMarker> toReturn = [];
     for (var zone in Global.zonesList) {
@@ -179,8 +185,6 @@ class Global {
         ));
       }
     }
-    print('toReturn - polygones');
-    print(toReturn);
     return toReturn;
   }
 
@@ -233,6 +237,30 @@ class Global {
           (Global.choixParcours ==
               getParcoursIndexFromId(element.Parcours_id))) {
         toReturn = element.id;
+      }
+    }
+    return toReturn;
+  }
+
+// TODO
+  static int getIndexOfPointById(int idPoint) {
+    int toReturn = -1;
+    int index = 0;
+    for (var point in Global.pointsList) {
+      if (idPoint == point.id) {
+        toReturn = index;
+      }
+      index++;
+    }
+    return toReturn;
+  }
+
+// TODO
+  static int getPointIdByFromZone(int Point_associe) {
+    int toReturn = -1;
+    for (var association in Global.zonesPointAssocieList) {
+      if (int.parse(association.item) == Point_associe) {
+        toReturn = int.parse(association.item);
       }
     }
     return toReturn;
@@ -292,18 +320,19 @@ class Global {
   }
 
   static void pointChecking(id) {
-    if (Global.pointsList[id - 1].icon.color == Colors.blue) {
-      Global.pointsList[id - 1].icon = const Icon(
+    int indexPoint = getIndexOfPointById(id);
+    if (Global.pointsList[indexPoint].icon.color == Colors.blue) {
+      Global.pointsList[indexPoint].icon = const Icon(
           Icons.location_disabled_rounded,
           color: Colors.blue,
           size: 25);
     } else {
-      Global.pointsList[id - 1].icon = const Icon(
+      Global.pointsList[indexPoint].icon = const Icon(
           Icons.location_disabled_rounded,
           color: Colors.green,
           size: 25);
     }
-    if (Global.pointsList[id - 1].actualGoal) {
+    if (Global.pointsList[indexPoint].actualGoal) {
       var index;
       int i = 0;
       for (var etape in Global.parcoursList[Global.choixParcours].Etapes) {
@@ -319,7 +348,7 @@ class Global {
                 1]
             .actualGoal = true;
       }
-      Global.pointsList[id - 1].actualGoal = false;
+      Global.pointsList[indexPoint].actualGoal = false;
     }
   }
 
@@ -327,7 +356,6 @@ class Global {
     for (var zone in Global.zonesList) {
       if (zone.Point_associe.isNotEmpty) {
         for (var point in zone.Point_associe) {
-          print('Point : $point - id : ${Global.pointsList[point - 1].id}');
           Global.pointsList[point - 1].icon =
               const Icon(Icons.my_location, color: Colors.blue, size: 25);
         }

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geofencing/pages/map.dart';
 import 'package:geofencing/pages/credit.dart';
@@ -56,7 +57,9 @@ class MyAppState extends State<ReglagePage> {
                     backgroundColor: Colors.blue,
                     icon: const Icon(Icons.system_update),
                     onPressed: () {
-                      print('reload data');
+                      if (kDebugMode) {
+                        print('reload data');
+                      }
                     },
                   ),
                 ),
