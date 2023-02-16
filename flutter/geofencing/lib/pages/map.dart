@@ -95,44 +95,38 @@ class _MyAppState extends State<MapPage> {
                 // future: currentLocation(),
                 builder:
                     (BuildContext context, AsyncSnapshot<dynamic> snapchat) {
-                  // if (snapchat.hasData) {
-                  // final LocationData currentLocation = snapchat.data;
                   return FlutterMap(
                     options: MapOptions(
                       // center: LatLng(currentLocation.latitude!,
                       //     currentLocation.longitude!),
                       center: LatLng(48.6295563, 6.107150),
-                      minZoom: 17,
-                      maxZoom: 17,
-                      zoom: 17,
+                      minZoom: 18,
+                      maxZoom: 18,
+                      zoom: 18,
+                      // minZoom: 17,
+                      // maxZoom: 17,
+                      // zoom: 17,
                     ),
-                    // mapController: mapController,
                     children: [
                       TileLayer(
                         urlTemplate:
                             "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                         subdomains: const ['a', 'b', 'c'],
                       ),
+                      CurrentLocationLayer(
+                        followOnLocationUpdate: FollowOnLocationUpdate.always,
+                      ),
                       CircleLayer(
-                        // circles: Global.circles,
                         circles: Global.getCircles(),
                       ),
                       PolygonLayer(
-                        // polygons: Global.polygones,
                         polygons: Global.getPolygons(),
                       ),
                       MarkerLayer(
                         markers: setMarkerList(),
                       ),
-                      // LocationMarkerLayer(
-                      //     position: LocationMarkerPosition(
-                      //         latitude: currentLocation.latitude!,
-                      //         longitude: currentLocation.longitude!,
-                      //         accuracy: currentLocation.accuracy!))
                     ],
                   );
-                  // }
-                  // return const Center(child: CircularProgressIndicator());
                 },
               ),
             ),

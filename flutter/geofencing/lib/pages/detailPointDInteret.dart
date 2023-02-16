@@ -50,7 +50,6 @@ class _MyAppState extends State<detailPointDInteret> {
           centerTitle: true,
           title: Text(
             Global.pointsList[Global.getIndexOfPointById(id)].Titre,
-            // Global.detailsList[id][0].data,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 50,
@@ -87,35 +86,12 @@ List<TableRow> contenuAffichage(
   List<TableRow> contenu = [];
   // images
   for (var image in Global.pointsList[Global.getIndexOfPointById(id)].Images) {
-    String link =
-        'http://docketu.iutnc.univ-lorraine.fr:51080/assets/${Global.getDirectusIdFromFilesId(image, id)}';
-    contenu.add(
-      TableRow(
-        children: [
-          Text(
-            'id image : $image -> ${Global.getDirectusIdFromFilesId(image, id)} \n url : $link',
-          ),
-        ],
-      ),
-    );
     contenu.add(
       TableRow(
         children: [
           Image.network(
-            link,
+            'http://docketu.iutnc.univ-lorraine.fr:51080/assets/${Global.getDirectusIdFromFilesId(image, id)}',
             fit: BoxFit.contain,
-          ),
-          // Image.network(link),
-          // Image.network(
-          //     'http://docketu.iutnc.univ-lorraine.fr:51080/assets/${Global.getDirectusIdFromFilesId(image, id)}'),
-        ],
-      ),
-    );
-    contenu.add(
-      TableRow(
-        children: [
-          Text(
-            'id image : $image -> ${Global.getDirectusIdFromFilesId(image, id)} \n url : $link',
           ),
         ],
       ),
@@ -147,48 +123,5 @@ List<TableRow> contenuAffichage(
     );
     playersList.add(player);
   }
-  // for (var element in Global.detailsList[id]) {
-  //   switch (element.type) {
-  //     case "txt":
-  //       contenu.add(
-  //         TableRow(
-  //           children: [
-  //             Text(
-  //               element.data,
-  //               textAlign: TextAlign.justify,
-  //               style: DefaultTextStyle.of(context)
-  //                   .style
-  //                   .apply(fontSizeFactor: 2.0),
-  //             ),
-  //           ],
-  //         ),
-  //       );
-  //       break;
-  //     case "img":
-  //       contenu.add(
-  //         TableRow(
-  //           children: [
-  //             Image.asset(
-  //               'assets/${element.data}',
-  //               fit: BoxFit.contain,
-  //             )
-  //           ],
-  //         ),
-  //       );
-  //       break;
-  //     case "mp4":
-  //       YoutubePlayerScaffold player = YoutubePlayerScaffold(element.data);
-  //       player.initState();
-  //       contenu.add(
-  //         TableRow(
-  //           children: [
-  //             player.build(context),
-  //           ],
-  //         ),
-  //       );
-  //       playersList.add(player);
-  //       break;
-  //   }
-  // }
   return contenu;
 }
