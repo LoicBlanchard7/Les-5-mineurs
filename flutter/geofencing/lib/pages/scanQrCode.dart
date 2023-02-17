@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.grey,
       ),
       home: const qrCodeScanner(title: 'Flutter Demo Home Page'),
     );
@@ -44,36 +44,52 @@ class _MyPageState extends State<qrCodeScanner> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: 400,
-              width: 400,
-              child: QRView(key: _gLobalkey, onQRViewCreated: qr),
-            ),
-            Center(
-              child: (result != null)
-                  ? ElevatedButton(
-                      child: Text('Informations du point ${result!.code}'),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => detailPointDInteret(
-                                  int.parse('${result!.code}'))),
-                        );
-                      })
-                  /*? Text('${result!.code}')*/
-                  : const Text('Scan a code'),
-            )
-          ],
+        appBar: AppBar(
+          title: Text(widget.title),
         ),
-      ),
-    );
+        body: Center(
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Color.fromARGB(255, 72, 68, 68),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                  height: 400,
+                  width: 400,
+                  child: QRView(key: _gLobalkey, onQRViewCreated: qr),
+                ),
+                Center(
+                  child: (result != null)
+                      ? ElevatedButton(
+                          child: Text('Informations du point ${result!.code}'),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.black,
+                            onPrimary: Colors.white,
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => detailPointDInteret(
+                                      int.parse('${result!.code}'))),
+                            );
+                          },
+                        )
+                      /*? Text('${result!.code}')*/
+                      : const Text(
+                          'Scanner un code',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            color: Colors.white,
+                          ),
+                        ),
+                )
+              ],
+            ),
+          ),
+        ));
   }
 }
