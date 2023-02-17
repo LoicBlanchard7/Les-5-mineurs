@@ -47,6 +47,7 @@ dependencies:
   syncfusion_flutter_maps: ^20.4.49
   video_player: ^2.5.1
   youtube_player_flutter: ^8.1.0
+  http: ^0.13.5
 
 
 dev_dependencies:

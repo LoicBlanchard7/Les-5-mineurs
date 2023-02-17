@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:geofencing/database/database.dart';
+import 'package:geofencing/database/geofencingBDD.dart';
 import 'package:geofencing/global.dart';
 import 'pages/accueil.dart';
 
 void main() {
-  Database;
+  geofencingBDD.launchdatabase();
 
   Global.changePointToZonePoint();
 

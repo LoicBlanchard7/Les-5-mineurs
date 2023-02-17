@@ -1,7 +1,23 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geofencing/pages/map.dart';
 import 'package:geofencing/pages/credit.dart';
+
+import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
+import 'dart:convert';
+
+import 'package:geofencing/database/geofencingBDD.dart';
+import 'package:sqflite/sqflite.dart';
+
+import 'package:geofencing/models/coordonnees.dart';
+import 'package:geofencing/models/etat.dart';
+import 'package:geofencing/models/parcours.dart';
+import 'package:geofencing/models/parcourspoints.dart';
+import 'package:geofencing/models/points.dart';
+import 'package:geofencing/models/pointsfiles.dart';
+import 'package:geofencing/models/pointsvideos.dart';
+import 'package:geofencing/models/zones.dart';
+import 'package:geofencing/models/zonespoint.dart';
 
 class ReglagePage extends StatefulWidget {
   const ReglagePage({super.key});
@@ -11,6 +27,33 @@ class ReglagePage extends StatefulWidget {
 }
 
 class MyAppState extends State<ReglagePage> {
+  void isUpDate() async {
+    print('fetchData called');
+    const url = 'http://docketu.iutnc.univ-lorraine.fr:51080/Items/Etat';
+    final uri = Uri.parse(url);
+    final response = await http.get(uri);
+    final body = response.body;
+    final json = jsonDecode(body);
+    final results = json['data'];
+    final updateApi = hash(results['LastUpdate']);
+    print(results['LastUpdate']);
+
+    final database = await openDatabase(
+      join(await getDatabasesPath(), 'geofencingDB.db'),
+    );
+
+    List<Etat> etats = await Etat.listEtats(await database);
+    final updateBDD = hash(etats[0].lastUpdate);
+    print(etats[0].lastUpdate);
+
+    if (updateApi != updateBDD) {
+      print("FAUT METTRE A JOUR ENCULE");
+      geofencingBDD.UpdateDatabase(database);
+    } else {
+      print("C'EST A JOUR FDP");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return FractionallySizedBox(
@@ -56,11 +99,7 @@ class MyAppState extends State<ReglagePage> {
                     ),
                     backgroundColor: Colors.blue,
                     icon: const Icon(Icons.system_update),
-                    onPressed: () {
-                      if (kDebugMode) {
-                        print('reload data');
-                      }
-                    },
+                    onPressed: isUpDate,
                   ),
                 ),
               ),
