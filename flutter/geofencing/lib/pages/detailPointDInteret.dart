@@ -1,6 +1,4 @@
 // ignore_for_file: library_private_types_in_public_api, file_names, camel_case_types, must_be_immutable, no_logic_in_create_state
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:geofencing/global.dart';
 import 'package:geofencing/pages/youtubePlayer.dart';
