@@ -9,6 +9,5 @@ void main() {
   Global.changePointToZonePoint();
 
   runApp(const MaterialApp(
-    home: AccueilPage(),
-  ));
+      home: AccueilPage(), debugShowCheckedModeBanner: false));
 }

@@ -103,9 +103,6 @@ class _MyAppState extends State<MapPage> {
                       minZoom: 18,
                       maxZoom: 18,
                       zoom: 18,
-                      // minZoom: 17,
-                      // maxZoom: 17,
-                      // zoom: 17,
                     ),
                     children: [
                       TileLayer(
@@ -133,77 +130,54 @@ class _MyAppState extends State<MapPage> {
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.black,
-            width: 5.0,
-          ),
-        ),
-        child: BottomNavigationBar(
-          backgroundColor: Color.fromARGB(255, 185, 184, 184),
-          fixedColor: Colors.black,
-          items: [
-            BottomNavigationBarItem(
-              label: "Parcours",
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
               icon: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ChoixParcours()),
-                  );
-                },
-                child: Icon(
-                  Icons.route_outlined,
-                  size: 70,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            BottomNavigationBarItem(
-              label: "QR Code",
-              icon: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(90)),
-                  color: Colors.black,
-                ),
-                child: GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const qrCodeScanner(title: 'Scan QR Code.')),
+                      MaterialPageRoute(builder: (context) => ChoixParcours()),
                     );
                   },
                   child: Icon(
-                    Icons.cameraswitch_outlined,
-                    size: 70,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-            BottomNavigationBarItem(
-              label: "Paramètres",
-              icon: GestureDetector(
+                    Icons.route_outlined,
+                    color: Color.fromARGB(255, 71, 71, 71),
+                  )),
+              label: "Parcours"),
+          BottomNavigationBarItem(
+            icon: GestureDetector(
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const ReglagePage()),
+                        builder: (context) =>
+                            qrCodeScanner(title: 'Scan QR Code.')),
                   );
                 },
                 child: Icon(
-                  Icons.settings,
-                  size: 70,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          ],
-        ),
+                  Icons.qr_code_scanner,
+                  color: Color.fromARGB(255, 71, 71, 71),
+                )),
+            label: 'Qr Code',
+          ),
+          BottomNavigationBarItem(
+              icon: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ReglagePage()),
+                    );
+                  },
+                  child: Icon(
+                    Icons.settings,
+                    color: Color.fromARGB(255, 71, 71, 71),
+                  )),
+              label: 'Paramètres'),
+        ],
+        currentIndex: 1,
+        selectedItemColor: Color.fromARGB(255, 71, 71, 71),
+        iconSize: 35,
       ),
     );
   }

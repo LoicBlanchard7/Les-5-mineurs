@@ -89,6 +89,7 @@ class MyAppState extends State<ReglagePage> {
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: FloatingActionButton.extended(
+                    heroTag: "update",
                     label: const Text(
                       'Mettre a jour les données',
                       textAlign: TextAlign.center,
@@ -111,6 +112,7 @@ class MyAppState extends State<ReglagePage> {
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: FloatingActionButton.extended(
+                    heroTag: "Return",
                     label: const Text(
                       'Retour à la carte',
                       textAlign: TextAlign.center,
@@ -139,6 +141,7 @@ class MyAppState extends State<ReglagePage> {
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: FloatingActionButton.extended(
+                    heroTag: "credit",
                     label: const Text(
                       'Crédits',
                       textAlign: TextAlign.center,
