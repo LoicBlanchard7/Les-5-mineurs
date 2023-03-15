@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geofencing/pages/ChoixParcours.dart';
@@ -21,95 +23,140 @@ class MyAppState extends State<AccueilPage> {
 
   @override
   Widget build(BuildContext context) {
-    return FractionallySizedBox(
-      widthFactor: 1,
-      heightFactor: 1,
-      child: Scaffold(
-        body: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/fond_accueil.jpg'),
-              fit: BoxFit.cover,
-            ),
+    return Scaffold(
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/fond_accueil.jpg"),
+            opacity: 0.9,
+            fit: BoxFit.cover,
           ),
-          child: Column(
-            children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: const FittedBox(
-                  fit: BoxFit.cover,
-                  child: Text(
-                    '\n\nBienvenue à la mines\nde Neuves Maison\npour sa découverte\nen extérieur\n',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                      fontStyle: FontStyle.normal,
-                      shadows: [Shadow(blurRadius: 3, color: Colors.black)],
+        ),
+        child: ClipRRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Container(
+              color: Colors.grey.withOpacity(0.1),
+              child: SafeArea(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                      //color: Color.fromARGB(150, 59, 59, 59),
+                      alignment: Alignment.center,
+                      child: const Text(
+                        'Bienvenue à la mines de Neuves Maison pour sa découverte en extérieur',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 40,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.bold),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 10,
+                      )),
+                  Container(
+                    alignment: Alignment.center,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          margin: const EdgeInsets.only(
+                              left: 40, right: 40, bottom: 40, top: 40),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: FloatingActionButton.extended(
+                                heroTag: "Parc",
+                                label: const Text(
+                                  'Choix du parcours',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30,
+                                  ),
+                                ), // <-- Text
+                                backgroundColor: Colors.blue,
+                                // icon: const Icon(Icons.arrow_back_ios_sharp),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ChoixParcours()),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(
+                              left: 40, right: 40, bottom: 40),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: FloatingActionButton.extended(
+                                heroTag: "Map",
+                                label: const Text(
+                                  'Ouvrir la carte',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30,
+                                  ),
+                                ), // <-- Text
+                                backgroundColor: Colors.blue,
+                                // icon: const Icon(Icons.arrow_back_ios_sharp),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const MapPage()),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(
+                              left: 40, right: 40, bottom: 40),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: FloatingActionButton.extended(
+                                heroTag: "Param",
+                                label: const Text(
+                                  'Paramètres',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30,
+                                  ),
+                                ), // <-- Text
+                                backgroundColor: Colors.blue,
+                                // icon: const Icon(Icons.arrow_back_ios_sharp),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ReglagePage()),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
-                ),
-              ),
-              FloatingActionButton.extended(
-                label: const Text(
-                  'Ouvrir la carte',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 35,
-                  ),
-                ), // <-- Text
-                backgroundColor: Colors.black,
-                icon: const Icon(
-                  Icons.map,
-                  size: 50.0,
-                ),
-                onPressed: () {
-                  if (kDebugMode) {
-                    print('map');
-                  }
-                  openPage(const MapPage(), context);
-                },
-              ),
-              const Text(''),
-              FloatingActionButton.extended(
-                label: const Text(
-                  'Choix de parcours',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 35,
-                  ),
-                ), // <-- Text
-                backgroundColor: Colors.black,
-                icon: const Icon(
-                  Icons.route_outlined,
-                  size: 50.0,
-                ),
-                onPressed: () {
-                  openPage(const ChoixParcours(), context);
-                },
-              ),
-              const Text(''),
-              FloatingActionButton.extended(
-                label: const Text(
-                  'Paramètres',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 35,
-                  ),
-                ), // <-- Text
-                backgroundColor: Colors.black,
-                icon: const Icon(
-                  Icons.settings,
-                  size: 50.0,
-                ),
-                onPressed: () {
-                  openPage(const ReglagePage(), context);
-                },
-              ),
-            ],
+                ],
+              )),
+            ),
           ),
         ),
       ),
