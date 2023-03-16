@@ -1,7 +1,6 @@
-// ignore_for_file: library_private_types_in_public_api, non_constant_identifier_names, prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
+import 'package:geofencing/pages/reglages.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -9,7 +8,6 @@ import '../global.dart';
 import 'package:geofencing/pages/ChoixParcours.dart';
 import 'package:geofencing/pages/detailPointDInteret.dart';
 import 'package:geofencing/pages/scanQrCode.dart';
-import 'package:geofencing/pages/reglages.dart';
 
 Future<LocationData?> currentLocation() async {
   bool serviceEnabled;
@@ -137,10 +135,11 @@ class _MyAppState extends State<MapPage> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ChoixParcours()),
+                      MaterialPageRoute(
+                          builder: (context) => const ChoixParcours()),
                     );
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.route_outlined,
                     color: Color.fromARGB(255, 71, 71, 71),
                   )),
@@ -152,10 +151,10 @@ class _MyAppState extends State<MapPage> {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            qrCodeScanner(title: 'Scan QR Code.')),
+                            const qrCodeScanner(title: 'Scan QR Code.')),
                   );
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.qr_code_scanner,
                   color: Color.fromARGB(255, 71, 71, 71),
                 )),
@@ -166,17 +165,18 @@ class _MyAppState extends State<MapPage> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ReglagePage()),
+                      MaterialPageRoute(
+                          builder: (context) => const ReglagePage()),
                     );
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.settings,
                     color: Color.fromARGB(255, 71, 71, 71),
                   )),
               label: 'Paramètres'),
         ],
         currentIndex: 1,
-        selectedItemColor: Color.fromARGB(255, 71, 71, 71),
+        selectedItemColor: const Color.fromARGB(255, 71, 71, 71),
         iconSize: 35,
       ),
     );

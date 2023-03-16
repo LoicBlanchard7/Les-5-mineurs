@@ -50,7 +50,8 @@ class MyAppState extends State<AccueilPage> {
                         style: TextStyle(
                             fontSize: 40,
                             fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 10,
                       )),
@@ -67,7 +68,40 @@ class MyAppState extends State<AccueilPage> {
                             child: FittedBox(
                               fit: BoxFit.scaleDown,
                               child: FloatingActionButton.extended(
+                                heroTag: "Map",
+                                icon: const Icon(Icons.map, size: 30),
+                                label: const Text(
+                                  'Ouvrir la carte',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30,
+                                  ),
+                                ), // <-- Text
+                                backgroundColor: Colors.black,
+                                // icon: const Icon(Icons.arrow_back_ios_sharp),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const MapPage()),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(
+                              left: 40, right: 40, bottom: 40),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: FloatingActionButton.extended(
                                 heroTag: "Parc",
+                                icon:
+                                    const Icon(Icons.route_outlined, size: 30),
                                 label: const Text(
                                   'Choix du parcours',
                                   textAlign: TextAlign.center,
@@ -76,7 +110,7 @@ class MyAppState extends State<AccueilPage> {
                                     fontSize: 30,
                                   ),
                                 ), // <-- Text
-                                backgroundColor: Colors.blue,
+                                backgroundColor: Colors.black,
                                 // icon: const Icon(Icons.arrow_back_ios_sharp),
                                 onPressed: () {
                                   Navigator.push(
@@ -98,37 +132,8 @@ class MyAppState extends State<AccueilPage> {
                             child: FittedBox(
                               fit: BoxFit.scaleDown,
                               child: FloatingActionButton.extended(
-                                heroTag: "Map",
-                                label: const Text(
-                                  'Ouvrir la carte',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 30,
-                                  ),
-                                ), // <-- Text
-                                backgroundColor: Colors.blue,
-                                // icon: const Icon(Icons.arrow_back_ios_sharp),
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const MapPage()),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(
-                              left: 40, right: 40, bottom: 40),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: FloatingActionButton.extended(
                                 heroTag: "Param",
+                                icon: const Icon(Icons.settings, size: 30),
                                 label: const Text(
                                   'Paramètres',
                                   textAlign: TextAlign.center,
@@ -137,7 +142,7 @@ class MyAppState extends State<AccueilPage> {
                                     fontSize: 30,
                                   ),
                                 ), // <-- Text
-                                backgroundColor: Colors.blue,
+                                backgroundColor: Colors.black,
                                 // icon: const Icon(Icons.arrow_back_ios_sharp),
                                 onPressed: () {
                                   Navigator.push(
