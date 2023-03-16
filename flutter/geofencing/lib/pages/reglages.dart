@@ -27,31 +27,62 @@ class ReglagePage extends StatefulWidget {
 }
 
 class MyAppState extends State<ReglagePage> {
-  void isUpDate() async {
-    print('fetchData called');
-    const url = 'http://docketu.iutnc.univ-lorraine.fr:51080/Items/Etat';
-    final uri = Uri.parse(url);
-    final response = await http.get(uri);
-    final body = response.body;
-    final json = jsonDecode(body);
-    final results = json['data'];
-    final updateApi = hash(results['LastUpdate']);
-    print(results['LastUpdate']);
+  void isUpDate(context) async {
+    try {
+      print('fetchData called');
+      const url = 'http://docketu.iutnc.univ-lorraine.fr:51080/Items/Etat';
+      final uri = Uri.parse(url);
+      final response = await http.get(uri);
+      final body = response.body;
+      final json = jsonDecode(body);
+      final results = json['data'];
+      final updateApi = hash(results['LastUpdate']);
+      print(results['LastUpdate']);
 
-    final database = await openDatabase(
-      join(await getDatabasesPath(), 'geofencingDB.db'),
-    );
+      final database = await openDatabase(
+        join(await getDatabasesPath(), 'geofencingDB.db'),
+      );
 
-    List<Etat> etats = await Etat.listEtats(await database);
-    final updateBDD = hash(etats[0].lastUpdate);
-    print(etats[0].lastUpdate);
+      List<Etat> etats = await Etat.listEtats(await database);
+      final updateBDD = hash(etats[0].lastUpdate);
+      print(etats[0].lastUpdate);
 
-    if (updateApi != updateBDD) {
-      print("FAUT METTRE A JOUR ENCULE");
-      geofencingBDD.UpdateDatabase(database);
-    } else {
-      print("C'EST A JOUR FDP");
+      if (updateApi != updateBDD) {
+        print("FAUT METTRE A JOUR ENCULE");
+        geofencingBDD.UpdateDatabase(database);
+      } else {
+        print("C'EST A JOUR FDP");
+      }
+    } catch (e) {
+      _showMyDialog(context);
     }
+  }
+
+  Future<void> _showMyDialog(BuildContext context) async {
+    return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Problème de connexion'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: const <Widget>[
+                  Text(
+                      'Nous avons rencontré un problème de connexion, veuillez vérifiez votre connexion internet.'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Je comprends'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
   }
 
   @override
@@ -99,7 +130,9 @@ class MyAppState extends State<ReglagePage> {
                     ),
                     backgroundColor: Colors.blue,
                     icon: const Icon(Icons.system_update),
-                    onPressed: isUpDate,
+                    onPressed: () {
+                      isUpDate(context);
+                    },
                   ),
                 ),
               ),
