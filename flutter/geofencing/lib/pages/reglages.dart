@@ -216,6 +216,11 @@ class MyAppState extends State<ReglagePage> {
                         )
                       ],
                     ),
+                    backgroundColor: Colors.blue,
+                    icon: const Icon(Icons.system_update),
+                    onPressed: () {
+                      isUpDate(context);
+                    },
                   ),
                 ],
               )),
