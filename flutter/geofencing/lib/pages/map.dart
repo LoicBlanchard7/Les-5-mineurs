@@ -1,7 +1,6 @@
-// ignore_for_file: library_private_types_in_public_api, non_constant_identifier_names, prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
+import 'package:geofencing/pages/reglages.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -9,7 +8,6 @@ import '../global.dart';
 import 'package:geofencing/pages/ChoixParcours.dart';
 import 'package:geofencing/pages/detailPointDInteret.dart';
 import 'package:geofencing/pages/scanQrCode.dart';
-import 'package:geofencing/pages/reglages.dart';
 
 Future<LocationData?> currentLocation() async {
   bool serviceEnabled;
@@ -103,9 +101,6 @@ class _MyAppState extends State<MapPage> {
                       minZoom: 18,
                       maxZoom: 18,
                       zoom: 18,
-                      // minZoom: 17,
-                      // maxZoom: 17,
-                      // zoom: 17,
                     ),
                     children: [
                       TileLayer(
@@ -133,77 +128,56 @@ class _MyAppState extends State<MapPage> {
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.black,
-            width: 5.0,
-          ),
-        ),
-        child: BottomNavigationBar(
-          backgroundColor: Color.fromARGB(255, 185, 184, 184),
-          fixedColor: Colors.black,
-          items: [
-            BottomNavigationBarItem(
-              label: "Parcours",
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
               icon: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ChoixParcours()),
-                  );
-                },
-                child: Icon(
-                  Icons.route_outlined,
-                  size: 70,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            BottomNavigationBarItem(
-              label: "QR Code",
-              icon: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(90)),
-                  color: Colors.black,
-                ),
-                child: GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              const qrCodeScanner(title: 'Scan QR Code.')),
+                          builder: (context) => const ChoixParcours()),
                     );
                   },
-                  child: Icon(
-                    Icons.cameraswitch_outlined,
-                    size: 70,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-            BottomNavigationBarItem(
-              label: "Paramètres",
-              icon: GestureDetector(
+                  child: const Icon(
+                    Icons.route_outlined,
+                    color: Color.fromARGB(255, 71, 71, 71),
+                  )),
+              label: "Parcours"),
+          BottomNavigationBarItem(
+            icon: GestureDetector(
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const ReglagePage()),
+                        builder: (context) =>
+                            const qrCodeScanner(title: 'Scan QR Code.')),
                   );
                 },
-                child: Icon(
-                  Icons.settings,
-                  size: 70,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          ],
-        ),
+                child: const Icon(
+                  Icons.qr_code_scanner,
+                  color: Color.fromARGB(255, 71, 71, 71),
+                )),
+            label: 'Qr Code',
+          ),
+          BottomNavigationBarItem(
+              icon: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ReglagePage()),
+                    );
+                  },
+                  child: const Icon(
+                    Icons.settings,
+                    color: Color.fromARGB(255, 71, 71, 71),
+                  )),
+              label: 'Paramètres'),
+        ],
+        currentIndex: 1,
+        selectedItemColor: const Color.fromARGB(255, 71, 71, 71),
+        iconSize: 35,
       ),
     );
   }
