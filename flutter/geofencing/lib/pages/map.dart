@@ -5,7 +5,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:flutter_map/flutter_map.dart';
 import '../global.dart';
-import 'package:geofencing/pages/ChoixParcours.dart';
+import 'package:geofencing/pages/choixParcours.dart';
 import 'package:geofencing/pages/detailPointDInteret.dart';
 import 'package:geofencing/pages/scanQrCode.dart';
 
