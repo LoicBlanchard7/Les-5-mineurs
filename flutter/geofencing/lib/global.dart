@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:geofencing/bdd/Points_files.dart';
 import 'package:geofencing/bdd/Zones_Point_associe.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -39,15 +38,6 @@ class Global {
   static List<Points> pointsList = [];
   static List<PointsFiles> pointsFiles = [];
   static List<PointsVideos> pointVideos = [];
-
-  static List<Points_files> pointsFilesList = [
-    Points_files(
-      id: 1,
-      Points_id: 1,
-      directus_files_id: "324204b8-10d4-496c-9bc0-e43c8924540c",
-      id_point: null,
-    )
-  ];
 
   static List<Zone> zonesList = [
     Zone(1, "Z1", "Polygon", [
@@ -127,16 +117,6 @@ class Global {
   //   [0, 1, 2, 3],
   // ];
   static List<Parcours> parcoursList = [];
-
-  static String getDirectusIdFromFilesId(int fileId, String pointId) {
-    String toReturn = "";
-    for (var file in Global.pointsFilesList) {
-      if ((file.id == fileId) && (file.Points_id == pointId)) {
-        toReturn = file.directus_files_id;
-      }
-    }
-    return toReturn.toString();
-  }
 
   static int getParcoursIndexFromId(int parcoursId) {
     int toReturn = 0;
