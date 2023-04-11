@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:geofencing/pages/ChoixParcours.dart';
+import 'package:geofencing/pages/choixParcours.dart';
 import 'package:geofencing/pages/map.dart';
 import 'package:geofencing/pages/reglages.dart';
 
@@ -45,7 +45,7 @@ class MyAppState extends State<AccueilPage> {
                       //color: Color.fromARGB(150, 59, 59, 59),
                       alignment: Alignment.center,
                       child: const Text(
-                        'Bienvenue à la mines de Neuves Maison pour sa découverte en extérieur',
+                        'Bienvenue à la mine de Neuves Maison pour sa découverte en extérieur',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 40,

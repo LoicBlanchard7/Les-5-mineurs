@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api, file_names
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geofencing/pages/map.dart';
@@ -25,14 +23,13 @@ class _MyAppState extends State<ChoixParcours> {
         ),
         padding: const EdgeInsets.only(left: 50.0, right: 50.0),
         child: Column(
-          // ignore: prefer_const_literals_to_create_immutables
           children: [
             SizedBox(
               width: MediaQuery.of(context).size.width,
               child: const FittedBox(
                 fit: BoxFit.cover,
                 child: Text(
-                  '\n\nBienvenue dans la visite\nextérieur de la mines\nde Neuves Maison\n',
+                  '\n\nBienvenue dans la visite\nextérieur de la mine\nde Neuves-Maison.\n',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
@@ -96,7 +93,6 @@ class Tableau extends StatelessWidget {
       ),
     ];
     for (var element in Global.parcoursList) {
-      // print(element.id);
       parcours.add(
         TableRow(
           children: [
@@ -149,89 +145,6 @@ class Tableau extends StatelessWidget {
     return Table(
       border: TableBorder.all(),
       children: getParcours(context),
-      // children: <TableRow>[
-      //   TableRow(
-      //     children: [
-      //       Container(
-      //         color: Colors.blue,
-      //         child: Text(
-      //           ' Choisissez votre parcours',
-      //           style: DefaultTextStyle.of(context)
-      //               .style
-      //               .apply(fontSizeFactor: 2.0),
-      //         ),
-      //       )
-      //     ],
-      //   ),
-      //   TableRow(
-      //     decoration:
-      //         const BoxDecoration(color: Color.fromARGB(150, 255, 255, 255)),
-      //     children: [
-      //       GestureDetector(
-      //         onTap: () {
-      //           choixParcours(context, 0);
-      //         },
-      //         child: Text(
-      //           ' Parcours 15-20 min',
-      //           style: DefaultTextStyle.of(context)
-      //               .style
-      //               .apply(fontSizeFactor: 2.0),
-      //         ),
-      //       )
-      //     ],
-      //   ),
-      //   TableRow(
-      //     decoration:
-      //         const BoxDecoration(color: Color.fromARGB(150, 255, 255, 255)),
-      //     children: [
-      //       GestureDetector(
-      //         onTap: () {
-      //           choixParcours(context, 2);
-      //         },
-      //         child: Text(
-      //           ' Parcours 30-45 min',
-      //           style: DefaultTextStyle.of(context)
-      //               .style
-      //               .apply(fontSizeFactor: 2.0),
-      //         ),
-      //       )
-      //     ],
-      //   ),
-      //   TableRow(
-      //     decoration:
-      //         const BoxDecoration(color: Color.fromARGB(150, 255, 255, 255)),
-      //     children: [
-      //       GestureDetector(
-      //         onTap: () {
-      //           choixParcours(context, 3);
-      //         },
-      //         child: Text(
-      //           ' Parcours 1h30-2h',
-      //           style: DefaultTextStyle.of(context)
-      //               .style
-      //               .apply(fontSizeFactor: 2.0),
-      //         ),
-      //       )
-      //     ],
-      //   ),
-      //   TableRow(
-      //     decoration:
-      //         const BoxDecoration(color: Color.fromARGB(150, 255, 255, 255)),
-      //     children: [
-      //       GestureDetector(
-      //         onTap: () {
-      //           choixParcours(context, -1);
-      //         },
-      //         child: Text(
-      //           ' Parcours libre',
-      //           style: DefaultTextStyle.of(context)
-      //               .style
-      //               .apply(fontSizeFactor: 2.0),
-      //         ),
-      //       )
-      //     ],
-      //   ),
-      // ],
     );
   }
 }
