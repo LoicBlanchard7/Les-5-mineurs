@@ -106,16 +106,18 @@ class geofencingBDD {
 
     var point1 = Points(
         idPoint: "a9cf4eab-ee9a-40a0-8a32-bdd4c7027075",
-        titre: 'Moyen-Âge',
-        contenu: "Bahaha alors le moyene âge c'est un truc de dingue",
+        titre: "Château d'eau",
+        contenu:
+            "La château d'eau est une construction placée sur un sommet géographique. Il permet de stocker de l'eau et de fournir le réseau de distribution en eau sous pression.",
         posX: 6.108300434237549,
         posY: 48.632316868572445);
     await Points.insertPoints(point1, await database);
 
     var points2 = Points(
         idPoint: "ed1469f4-77ac-4a9d-bc8d-a2e1acb8bfb7",
-        titre: 'points2',
-        contenu: "CC c'est le contenu",
+        titre: 'Entrée',
+        contenu:
+            "L'entrée de la mine a été rénové depuis son existence. Néanmoins cette dernière est la même depuis le début. Les mineurs y passaient pour entrer dans la mine et aller travailler.",
         posX: 6.108984540809615,
         posY: 48.63241025622807);
 
@@ -135,18 +137,18 @@ class geofencingBDD {
         idPointsVideos: 1,
         idPoint: "ed1469f4-77ac-4a9d-bc8d-a2e1acb8bfb7",
         urlVideo:
-            "https://www.youtube.com/watch?v=i2xzgwrGNhM&ab_channel=woud90");
+            "https://www.youtube.com/watch?v=431G8qVeslM&ab_channel=VincentFerry");
     await PointsVideos.insertPointsVideos(videos, await database);
 
     const files = PointsFiles(
         idPointsFiles: 1,
         idPoint: "ed1469f4-77ac-4a9d-bc8d-a2e1acb8bfb7",
-        idDirectus: "ejiolejne");
+        idDirectus: "Image");
     await PointsFiles.insertPointsFiles(files, await database);
 
     const zones = Zones(
         idZone: 1,
-        titre: "Entrée",
+        titre: "Colline",
         idPoint: "ed1469f4-77ac-4a9d-bc8d-a2e1acb8bfb7");
     await Zones.insertZones(zones, await database);
 
