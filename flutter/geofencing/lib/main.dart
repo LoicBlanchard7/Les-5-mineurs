@@ -9,7 +9,7 @@ void main() async {
   await geofencingBDD.launchdatabase();
   await geofencingBDD.initGlobalVariable();
 
-  Global.changePointToZonePoint();
+  //Global.changePointToZonePoint();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitDown,
     DeviceOrientation.portraitUp,

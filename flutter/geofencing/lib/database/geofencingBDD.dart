@@ -57,7 +57,7 @@ class geofencingBDD {
 
         db.execute('''
         CREATE TABLE points(
-          idPoint INTEGER PRIMARY KEY AUTOINCREMENT, 
+          idPoint STRING PRIMARY KEY, 
           titre STRING NOT NULL, 
           contenu STRING , 
           posX double, 
@@ -69,7 +69,7 @@ class geofencingBDD {
         db.execute('''
         CREATE TABLE pointsFiles(
           idPointsFiles INTEGER PRIMARY KEY, 
-          idPoint INTEGER, 
+          idPoint STRING, 
           idDirectus STRING NOT NULL,
           FOREIGN KEY (idPoint) REFERENCES points (idPoint)
         );
@@ -78,7 +78,7 @@ class geofencingBDD {
         db.execute('''
         CREATE TABLE pointsVideos(
           idPointsVideos INTEGER PRIMARY KEY, 
-          idPoint INTEGER, 
+          idPoint STRING, 
           urlVideo STRING NOT NULL,
           FOREIGN KEY (idPoint) REFERENCES points (idPoint)
         );
@@ -88,7 +88,7 @@ class geofencingBDD {
         CREATE TABLE zones(
           idZone INTEGER PRIMARY KEY, 
           titre STRING NOT NULL, 
-          idPoint INTEGER,
+          idPoint STRING,
           FOREIGN KEY (idPoint) REFERENCES points (idPoint)
         );
       '''); // Fait

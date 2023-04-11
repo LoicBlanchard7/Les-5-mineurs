@@ -79,7 +79,7 @@ class Points {
 
     return List.generate(maps.length, (i) {
       return Points(
-          idPoint: maps[i]['idPoint'],
+          idPoint: maps[i]['idPoint'].toString(),
           titre: maps[i]['titre'],
           contenu: maps[i]['contenu'],
           posX: maps[i]['posX'],
