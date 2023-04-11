@@ -143,6 +143,7 @@ class geofencingBDD {
     const parcours = Parcours(
         idParcours: 1, titre: "parcours1", duree: "00:30:00", etape: ["1"]);
     await Parcours.insertParcours(parcours, await database);
+    print("cc");
   }
 
   static initGlobalVariable() async {
@@ -154,6 +155,7 @@ class geofencingBDD {
       final points = await Points.listPoints(database);
       print("here3");
       final etats = await Etat.listEtats(database);
+      print("eaeaeazea-");
       final parcours = await Parcours.listParcours(database);
       print("here4-");
       final zones = await Zones.listZones(database);

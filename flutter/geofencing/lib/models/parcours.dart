@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:sqflite/sqflite.dart';
 
 class Parcours {
@@ -17,6 +19,7 @@ class Parcours {
       'idParcours': idParcours,
       'titre': titre,
       'duree': duree,
+      'etape': jsonEncode(etape),
     };
   }
 
@@ -62,13 +65,12 @@ class Parcours {
     final db = database;
 
     final List<Map<String, dynamic>> maps = await db.query('parcours');
-
     return List.generate(maps.length, (i) {
       return Parcours(
           idParcours: maps[i]['idParcours'],
           titre: maps[i]['titre'],
           duree: maps[i]['duree'],
-          etape: maps[i]['etape']);
+          etape: jsonDecode(maps[i]['etape']).cast<String>().toList());
     });
   }
 }
