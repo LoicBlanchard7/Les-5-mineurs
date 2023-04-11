@@ -5,7 +5,7 @@ import 'package:geofencing/pages/youtubePlayer.dart';
 import 'map.dart';
 
 class detailPointDInteret extends StatefulWidget {
-  int id;
+  String id;
 
   detailPointDInteret(this.id, {super.key});
 
@@ -14,7 +14,7 @@ class detailPointDInteret extends StatefulWidget {
 }
 
 class _MyAppState extends State<detailPointDInteret> {
-  int id;
+  String id;
 
   _MyAppState(this.id);
 
@@ -67,7 +67,7 @@ class _MyAppState extends State<detailPointDInteret> {
 }
 
 class Affichage extends StatelessWidget {
-  int id;
+  String id;
   List<YoutubePlayerScaffold> playersList;
 
   Affichage(this.id, this.playersList, {super.key});
@@ -81,7 +81,7 @@ class Affichage extends StatelessWidget {
 }
 
 List<TableRow> contenuAffichage(
-    BuildContext context, int id, List<YoutubePlayerScaffold> playersList) {
+    BuildContext context, String id, List<YoutubePlayerScaffold> playersList) {
   List<TableRow> contenu = [];
   // images
   for (var image in Global.pointsList[Global.getIndexOfPointById(id)].images) {

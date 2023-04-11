@@ -169,7 +169,7 @@ class Global {
   // ];
   static List<Parcours> parcoursList = [];
 
-  static String getDirectusIdFromFilesId(int fileId, int pointId) {
+  static String getDirectusIdFromFilesId(int fileId, String pointId) {
     String toReturn = "";
     for (var file in Global.pointsFilesList) {
       if ((file.id == fileId) && (file.Points_id == pointId)) {
@@ -191,7 +191,7 @@ class Global {
     return toReturn;
   }
 
-  static int getIndexOfPointById(int id) {
+  static int getIndexOfPointById(String id) {
     int toReturn = 0;
     int index = 0;
     for (var point in Global.pointsList) {
