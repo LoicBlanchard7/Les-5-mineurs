@@ -13,10 +13,7 @@ import 'models/zones.dart';
 import 'models/coordonnees.dart';
 
 /*
-import 'package:geofencing/bdd/Parcours.dart';
 import 'models/etat.dart';
-import 'models/parcours.dart';
-
 */
 
 class myMarker {
@@ -45,12 +42,10 @@ class Global {
 
   static List<Polygon> getPolygons() {
     List<Polygon> toReturn = [];
-    print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     for (var zone in Global.zonesList) {
       List<LatLng> points = [];
       for (var point in coordonneesList
           .where((element) => element.idZone == zone.idZone)) {
-        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         points.add(LatLng(point.posY, point.posX));
       }
       toReturn.add(Polygon(
