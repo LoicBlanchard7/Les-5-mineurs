@@ -42,13 +42,14 @@ class geofencingBDD {
         CREATE TABLE parcours(
           idParcours INTEGER PRIMARY KEY, 
           titre STRING NOT NULL, 
-          duree STRING NOT NULL
+          duree STRING NOT NULL,
+          etape STRING NOT NULL
         );
       '''); // Fait
         db.execute('''
         CREATE TABLE parcoursPoints(
         idParcoursPoints INTEGER PRIMARY KEY AUTOINCREMENT,
-        idPoint INTEGER, 
+        idPoint STRING, 
         idParcour INTEGER,
         FOREIGN KEY (idPoint) REFERENCES points (idPoint),
         FOREIGN KEY (idParcour) REFERENCES parcours (idParcours)
@@ -149,15 +150,18 @@ class geofencingBDD {
       final database = await openDatabase(
         join(await getDatabasesPath(), 'geofencingDB.db'),
       );
-
+      print("here");
       final points = await Points.listPoints(database);
+      print("here3");
       final etats = await Etat.listEtats(database);
       final parcours = await Parcours.listParcours(database);
+      print("here4-");
       final zones = await Zones.listZones(database);
       final coordonnees = await Coordonnees.listCoordonnees(database);
       final zonesPoints = await ZonesPoint.listZonesPoint(database);
-
+      print("here2");
       Global.pointsList = points;
+      print(points);
       Global.parcoursList = parcours;
     } catch (e) {}
   }

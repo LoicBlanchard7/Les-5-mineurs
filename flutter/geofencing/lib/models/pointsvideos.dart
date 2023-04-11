@@ -2,7 +2,7 @@ import 'package:sqflite/sqflite.dart';
 
 class PointsVideos {
   final int idPointsVideos;
-  final int idPoint;
+  final String idPoint;
   final String urlVideo;
 
   const PointsVideos({

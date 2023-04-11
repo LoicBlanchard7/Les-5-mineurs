@@ -47,6 +47,7 @@ class _MyAppState extends State<MapPage> {
       List<Marker> liste = [];
       for (var marker in Global.pointsList) {
         if (marker.actualGoal) {
+          print(marker);
           liste.add(Marker(
             point: LatLng(marker.posY, marker.posX),
             builder: (context) => IconButton(
