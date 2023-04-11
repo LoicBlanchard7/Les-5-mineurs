@@ -118,35 +118,44 @@ class geofencingBDD {
     );
 
     var point1 = Points(
-        idPoint: "0",
+        idPoint: "a9cf4eab-ee9a-40a0-8a32-bdd4c7027075",
         titre: 'Moyen-Âge',
         contenu: "Bahaha alors le moyene âge c'est un truc de dingue",
         posX: 6.108300434237549,
         posY: 48.632316868572445);
     await Points.insertPoints(point1, await database);
-    print(Points.listPoints(await database));
 
     var points2 = Points(
-        idPoint: "1",
+        idPoint: "ed1469f4-77ac-4a9d-bc8d-a2e1acb8bfb7",
         titre: 'points2',
         contenu: "CC c'est le contenu",
         posX: 6.108984540809615,
         posY: 48.63241025622807);
 
     await Points.insertPoints(points2, await database);
-    print(await Points.listPoints(await database));
 
     var etat = const Etat(
         idEtat: 1,
         lastUpdate:
             "Tue Apr 11 2023 12:29:56 GMT+0000 (Coordinated Universal Time)");
     await Etat.insertEtat(etat, await database);
-    print(await Etat.listEtats(await database));
 
     const parcours = Parcours(
         idParcours: 1, titre: "parcours1", duree: "00:30:00", etape: ["1"]);
     await Parcours.insertParcours(parcours, await database);
-    print("cc");
+
+    const videos = PointsVideos(
+        idPointsVideos: 1,
+        idPoint: "ed1469f4-77ac-4a9d-bc8d-a2e1acb8bfb7",
+        urlVideo:
+            "https://www.youtube.com/watch?v=i2xzgwrGNhM&ab_channel=woud90");
+    await PointsVideos.insertPointsVideos(videos, await database);
+
+    const files = PointsFiles(
+        idPointsFiles: 1,
+        idPoint: "ed1469f4-77ac-4a9d-bc8d-a2e1acb8bfb7",
+        idDirectus: "ejiolejne");
+    await PointsFiles.insertPointsFiles(files, await database);
   }
 
   static initGlobalVariable() async {
@@ -154,20 +163,21 @@ class geofencingBDD {
       final database = await openDatabase(
         join(await getDatabasesPath(), 'geofencingDB.db'),
       );
-      print("here");
       final points = await Points.listPoints(database);
-      print("here3");
       final etats = await Etat.listEtats(database);
-      print("eaeaeazea-");
       final parcours = await Parcours.listParcours(database);
-      print("here4-");
       final zones = await Zones.listZones(database);
       final coordonnees = await Coordonnees.listCoordonnees(database);
       final zonesPoints = await ZonesPoint.listZonesPoint(database);
-      print("here2");
+
+      final pointsFiles = await PointsFiles.listPointsFiles(database);
+      final pointVideos = await PointsVideos.listPointsVideos(database);
+
       Global.pointsList = points;
-      print(points);
       Global.parcoursList = parcours;
+
+      Global.pointsFiles = pointsFiles;
+      Global.pointVideos = pointVideos;
     } catch (e) {}
   }
 

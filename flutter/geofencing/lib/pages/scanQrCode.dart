@@ -44,7 +44,7 @@ class _MyPageState extends State<qrCodeScanner> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Scanner un QR Code"),
+          title: const Text("Accèder aux informations"),
           backgroundColor: const Color.fromARGB(255, 72, 68, 68),
         ),
         body: Center(
@@ -65,7 +65,7 @@ class _MyPageState extends State<qrCodeScanner> {
                       ? ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,
-                            backgroundColor: Colors.black,
+                            backgroundColor: Color.fromARGB(255, 19, 121, 12),
                           ),
                           onPressed: () {
                             Navigator.push(
@@ -75,14 +75,22 @@ class _MyPageState extends State<qrCodeScanner> {
                                       detailPointDInteret('${result!.code}')),
                             );
                           },
-                          child: Text('Informations du point ${result!.code}'),
+                          child: Text(
+                            'Accèder au point : ${Global.pointsList.where((element) => element.idPoint == result!.code).first.titre}',
+                            style: const TextStyle(
+                              fontSize: 20,
+                            ),
+                          ),
                         )
-                      : const Text(
-                          'Scanner un code',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                            color: Colors.black,
+                      : const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            'Veuillez scanner un QR Code',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
                 )

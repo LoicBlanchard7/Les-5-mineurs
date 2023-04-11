@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'pointsvideos.dart';
-import 'pointsfiles.dart';
 
 class Points {
   final String idPoint;
@@ -9,8 +8,6 @@ class Points {
   final String contenu;
   final double posX;
   final double posY;
-  final List<PointsVideos> urlVideo;
-  final List<int> images;
   bool actualGoal;
   Icon icon;
 
@@ -20,8 +17,6 @@ class Points {
     required this.contenu,
     required this.posX,
     required this.posY,
-    this.urlVideo = const [],
-    this.images = const [],
     this.actualGoal = false,
     this.icon = const Icon(Icons.my_location, color: Colors.green, size: 25),
   });

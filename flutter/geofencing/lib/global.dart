@@ -2,14 +2,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:geofencing/bdd/Parcours_Points.dart';
 import 'package:geofencing/bdd/Points_files.dart';
 import 'package:geofencing/bdd/Zones_Point_associe.dart';
 import 'package:latlong2/latlong.dart';
 
 import 'models/points.dart';
 import 'models/parcours.dart';
-import 'models/parcourspoints.dart';
+import 'models/pointsfiles.dart';
+import 'models/pointsvideos.dart';
+
 import 'bdd/Zone.dart';
 
 /*
@@ -17,8 +18,7 @@ import 'package:geofencing/bdd/Parcours.dart';
 import 'models/coordonnees.dart';
 import 'models/etat.dart';
 import 'models/parcours.dart';
-import 'models/pointsfiles.dart';
-import 'models/pointsvideos.dart';
+
 import 'models/zones.dart';
 import 'models/zonespoint.dart';
 */
@@ -55,6 +55,8 @@ class Global {
   //       const Icon(Icons.my_location, color: Colors.blue, size: 25), 4),
   // ];
   static List<Points> pointsList = [];
+  static List<PointsFiles> pointsFiles = [];
+  static List<PointsVideos> pointVideos = [];
 
   static List<Points_files> pointsFilesList = [
     Points_files(

@@ -84,12 +84,13 @@ List<TableRow> contenuAffichage(
     BuildContext context, String id, List<YoutubePlayerScaffold> playersList) {
   List<TableRow> contenu = [];
   // images
-  for (var image in Global.pointsList[Global.getIndexOfPointById(id)].images) {
+  for (var image
+      in Global.pointsFiles.where((element) => element.idPoint == id)) {
     contenu.add(
       TableRow(
         children: [
           Image.network(
-            'http://docketu.iutnc.univ-lorraine.fr:51080/assets/${Global.getDirectusIdFromFilesId(image, id)}',
+            'http://docketu.iutnc.univ-lorraine.fr:51080/assets/${image.idDirectus}',
             fit: BoxFit.contain,
           ),
         ],
@@ -110,7 +111,7 @@ List<TableRow> contenuAffichage(
   );
   // videos
   for (var video
-      in Global.pointsList[Global.getIndexOfPointById(id)].urlVideo) {
+      in Global.pointVideos.where((element) => element.idPoint == id)) {
     YoutubePlayerScaffold player = YoutubePlayerScaffold(video.urlVideo);
     player.initState();
     contenu.add(
