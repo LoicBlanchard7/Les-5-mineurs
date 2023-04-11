@@ -41,18 +41,19 @@ class _MyAppState extends State<detailPointDInteret> {
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios_new,
-                size: 50, color: Colors.white),
+                size: 40, color: Colors.white),
             onPressed: () => {backPress()},
           ),
-          toolbarHeight: 120,
+          toolbarHeight: 100,
           centerTitle: true,
           title: Text(
             Global.pointsList[Global.getIndexOfPointById(id)].Titre,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 50,
+              fontSize: 40,
             ),
           ),
+          backgroundColor: const Color.fromARGB(255, 72, 68, 68),
         ),
         body: SingleChildScrollView(
           child: Container(
