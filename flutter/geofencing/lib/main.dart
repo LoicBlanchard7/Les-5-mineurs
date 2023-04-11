@@ -3,11 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:geofencing/database/geofencingBDD.dart';
 import 'package:geofencing/global.dart';
 import 'pages/accueil.dart';
+import 'global.dart';
 
-void main() {
-  geofencingBDD.launchdatabase();
+void main() async {
+  await geofencingBDD.launchdatabase();
+  await geofencingBDD.initGlobalVariable();
 
-  Global.changePointToZonePoint();
+  //Global.changePointToZonePoint();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitDown,
     DeviceOrientation.portraitUp,

@@ -2,7 +2,7 @@ import 'package:sqflite/sqflite.dart';
 
 class PointsFiles {
   final int idPointsFiles;
-  final int idPoint;
+  final String idPoint;
   final String idDirectus;
 
   const PointsFiles({

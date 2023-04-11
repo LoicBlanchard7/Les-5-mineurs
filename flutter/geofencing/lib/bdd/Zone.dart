@@ -5,7 +5,7 @@ class Zone {
   String Titre;
   String type;
   List<List<double>> coordinates;
-  List<int> Point_associe;
+  List<String> Point_associe;
   List<double> coordinate;
   double radius;
   Zone(this.id, this.Titre, this.type,

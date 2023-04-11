@@ -1,18 +1,30 @@
+import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
+import 'pointsvideos.dart';
+import 'pointsfiles.dart';
 
 class Points {
-  final int idPoint;
+  final String idPoint;
   final String titre;
-  final String? contenu;
+  final String contenu;
   final double posX;
   final double posY;
+  final List<PointsVideos> urlVideo;
+  final List<int> images;
+  bool actualGoal;
+  Icon icon;
 
-  const Points(
-      {required this.idPoint,
-      required this.titre,
-      required this.contenu,
-      required this.posX,
-      required this.posY});
+  Points({
+    required this.idPoint,
+    required this.titre,
+    required this.contenu,
+    required this.posX,
+    required this.posY,
+    this.urlVideo = const [],
+    this.images = const [],
+    this.actualGoal = false,
+    this.icon = const Icon(Icons.my_location, color: Colors.green, size: 25),
+  });
 
   Map<String, dynamic> toMap() {
     return {
@@ -50,7 +62,7 @@ class Points {
     );
   }
 
-  static Future<void> deletePoints(int id, Database database) async {
+  static Future<void> deletePoints(String id, Database database) async {
     final db = database;
 
     await db.delete(
@@ -67,7 +79,7 @@ class Points {
 
     return List.generate(maps.length, (i) {
       return Points(
-          idPoint: maps[i]['idPoint'],
+          idPoint: maps[i]['idPoint'].toString(),
           titre: maps[i]['titre'],
           contenu: maps[i]['contenu'],
           posX: maps[i]['posX'],

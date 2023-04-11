@@ -7,7 +7,6 @@ import 'package:flutter/widgets.dart';
 import 'package:geofencing/models/coordonnees.dart';
 import 'package:geofencing/models/etat.dart';
 import 'package:geofencing/models/parcours.dart';
-import 'package:geofencing/models/parcourspoints.dart';
 import 'package:geofencing/models/points.dart';
 import 'package:geofencing/models/pointsfiles.dart';
 import 'package:geofencing/models/pointsvideos.dart';
@@ -17,9 +16,10 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../global.dart';
 
 class geofencingBDD {
-  static void launchdatabase() async {
+  static launchdatabase() async {
     // Avoid errors caused by flutter upgrade.
     // Importing 'package:flutter/widgets.dart' is required.
     WidgetsFlutterBinding.ensureInitialized();
@@ -42,13 +42,14 @@ class geofencingBDD {
         CREATE TABLE parcours(
           idParcours INTEGER PRIMARY KEY, 
           titre STRING NOT NULL, 
-          duree STRING NOT NULL
+          duree STRING NOT NULL,
+          etape STRING NOT NULL
         );
       '''); // Fait
         db.execute('''
         CREATE TABLE parcoursPoints(
         idParcoursPoints INTEGER PRIMARY KEY AUTOINCREMENT,
-        idPoint INTEGER, 
+        idPoint STRING, 
         idParcour INTEGER,
         FOREIGN KEY (idPoint) REFERENCES points (idPoint),
         FOREIGN KEY (idParcour) REFERENCES parcours (idParcours)
@@ -57,18 +58,19 @@ class geofencingBDD {
 
         db.execute('''
         CREATE TABLE points(
-          idPoint INTEGER PRIMARY KEY AUTOINCREMENT, 
+          idPoint STRING PRIMARY KEY, 
           titre STRING NOT NULL, 
           contenu STRING , 
           posX double, 
-          posY double
+          posY double,
+          actualGoal boolean
           );
       '''); // Fait
 
         db.execute('''
         CREATE TABLE pointsFiles(
           idPointsFiles INTEGER PRIMARY KEY, 
-          idPoint INTEGER, 
+          idPoint STRING, 
           idDirectus STRING NOT NULL,
           FOREIGN KEY (idPoint) REFERENCES points (idPoint)
         );
@@ -77,7 +79,7 @@ class geofencingBDD {
         db.execute('''
         CREATE TABLE pointsVideos(
           idPointsVideos INTEGER PRIMARY KEY, 
-          idPoint INTEGER, 
+          idPoint STRING, 
           urlVideo STRING NOT NULL,
           FOREIGN KEY (idPoint) REFERENCES points (idPoint)
         );
@@ -87,7 +89,7 @@ class geofencingBDD {
         CREATE TABLE zones(
           idZone INTEGER PRIMARY KEY, 
           titre STRING NOT NULL, 
-          idPoint INTEGER,
+          idPoint STRING,
           FOREIGN KEY (idPoint) REFERENCES points (idPoint)
         );
       '''); // Fait
@@ -115,21 +117,21 @@ class geofencingBDD {
       version: 1,
     );
 
-    var point1 = const Points(
-        idPoint: 0,
+    var point1 = Points(
+        idPoint: "0",
         titre: 'Moyen-Âge',
         contenu: "Bahaha alors le moyene âge c'est un truc de dingue",
-        posX: 3.4,
-        posY: 2.5);
+        posX: 6.108300434237549,
+        posY: 48.632316868572445);
     await Points.insertPoints(point1, await database);
     print(Points.listPoints(await database));
 
-    var points2 = const Points(
-        idPoint: 0,
+    var points2 = Points(
+        idPoint: "1",
         titre: 'points2',
         contenu: "CC c'est le contenu",
-        posX: 2.14,
-        posY: 2.190);
+        posX: 6.108984540809615,
+        posY: 48.63241025622807);
 
     await Points.insertPoints(points2, await database);
     print(await Points.listPoints(await database));
@@ -140,6 +142,33 @@ class geofencingBDD {
             "Tue Apr 11 2023 12:29:56 GMT+0000 (Coordinated Universal Time)");
     await Etat.insertEtat(etat, await database);
     print(await Etat.listEtats(await database));
+
+    const parcours = Parcours(
+        idParcours: 1, titre: "parcours1", duree: "00:30:00", etape: ["1"]);
+    await Parcours.insertParcours(parcours, await database);
+    print("cc");
+  }
+
+  static initGlobalVariable() async {
+    try {
+      final database = await openDatabase(
+        join(await getDatabasesPath(), 'geofencingDB.db'),
+      );
+      print("here");
+      final points = await Points.listPoints(database);
+      print("here3");
+      final etats = await Etat.listEtats(database);
+      print("eaeaeazea-");
+      final parcours = await Parcours.listParcours(database);
+      print("here4-");
+      final zones = await Zones.listZones(database);
+      final coordonnees = await Coordonnees.listCoordonnees(database);
+      final zonesPoints = await ZonesPoint.listZonesPoint(database);
+      print("here2");
+      Global.pointsList = points;
+      print(points);
+      Global.parcoursList = parcours;
+    } catch (e) {}
   }
 
   insert(String s, Map<String, dynamic> map, {required conflictAlgorithm}) {}
@@ -312,6 +341,7 @@ class geofencingBDD {
         idParcours: elem['id'],
         titre: elem['Titre'],
         duree: elem['Duree'],
+        etape: elem['Etape'],
       );
     }).toList();
 
@@ -320,23 +350,5 @@ class geofencingBDD {
     }
 
     print(await Parcours.listParcours(database));
-
-    //PARCOURS_POINTS
-    response = await http.get(Uri.parse("${url}Parcours_Points"));
-    json = jsonDecode(response.body);
-    results = json['data'] as List<dynamic>;
-    final pointsparc = results.map((elem) {
-      return ParcoursPoints(
-        idParcoursPoints: elem['id'],
-        idPoint: elem['Points_id'],
-        idParcour: elem['Parcours_id'],
-      );
-    }).toList();
-
-    for (var point in pointsparc) {
-      await ParcoursPoints.insertParcoursPoints(point, database);
-    }
-
-    print(await ParcoursPoints.listParcoursPoints(database));
   }
 }

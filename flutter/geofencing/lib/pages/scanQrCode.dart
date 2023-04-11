@@ -71,8 +71,8 @@ class _MyPageState extends State<qrCodeScanner> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => detailPointDInteret(
-                                      int.parse('${result!.code}'))),
+                                  builder: (context) =>
+                                      detailPointDInteret('${result!.code}')),
                             );
                           },
                           child: Text('Informations du point ${result!.code}'),

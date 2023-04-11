@@ -47,26 +47,28 @@ class _MyAppState extends State<MapPage> {
       List<Marker> liste = [];
       for (var marker in Global.pointsList) {
         if (marker.actualGoal) {
+          print(marker);
           liste.add(Marker(
-            point: LatLng(marker.coordinates[1], marker.coordinates[0]),
+            point: LatLng(marker.posY, marker.posX),
             builder: (context) => IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.my_location,
                 color: Colors.red,
                 size: 30,
-                shadows: const [Shadow(blurRadius: 2, color: Colors.blue)],
+                shadows: [Shadow(blurRadius: 2, color: Colors.blue)],
               ),
               onPressed: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => detailPointDInteret(marker.id)));
+                        builder: (context) =>
+                            detailPointDInteret(marker.idPoint)));
               },
             ),
           ));
         } else {
           liste.add(Marker(
-              point: LatLng(marker.coordinates[1], marker.coordinates[0]),
+              point: LatLng(marker.posY, marker.posX),
               builder: (context) => GestureDetector(
                     child: marker.icon,
                     onTap: () {
@@ -74,7 +76,7 @@ class _MyAppState extends State<MapPage> {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                detailPointDInteret(marker.id)),
+                                detailPointDInteret(marker.idPoint)),
                       );
                     },
                   )));

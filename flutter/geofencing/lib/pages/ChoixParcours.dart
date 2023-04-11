@@ -111,10 +111,10 @@ class Tableau extends StatelessWidget {
               color: const Color.fromARGB(150, 255, 255, 255),
               child: GestureDetector(
                 onTap: () {
-                  choixParcours(context, element.id - 1);
+                  choixParcours(context, element.idParcours - 1);
                 },
                 child: Text(
-                  element.Duree,
+                  element.duree,
                   style: DefaultTextStyle.of(context)
                       .style
                       .apply(fontSizeFactor: 2.0),

@@ -2,7 +2,7 @@ import 'package:sqflite/sqflite.dart';
 
 class ParcoursPoints {
   final int idParcoursPoints;
-  final int idPoint;
+  final String idPoint;
   final int idParcour;
 
   const ParcoursPoints({
