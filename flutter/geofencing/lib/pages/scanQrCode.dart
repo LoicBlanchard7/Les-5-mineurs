@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:geofencing/pages/detailPointDInteret.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:geofencing/global.dart';
-import 'map.dart';
+import 'package:geofencing/pages/map.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -44,12 +44,13 @@ class _MyPageState extends State<qrCodeScanner> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Scanner un QR Code"),
+          title: const Text("Scanner un QR Code"),
+          backgroundColor: const Color.fromARGB(255, 72, 68, 68),
         ),
         body: Center(
           child: Container(
             decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 72, 68, 68),
+              color: Color.fromARGB(255, 202, 199, 199),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -62,10 +63,9 @@ class _MyPageState extends State<qrCodeScanner> {
                 Center(
                   child: (result != null)
                       ? ElevatedButton(
-                          child: Text('Informations du point ${result!.code}'),
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.black,
-                            onPrimary: Colors.white,
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.black,
                           ),
                           onPressed: () {
                             Navigator.push(
@@ -75,14 +75,14 @@ class _MyPageState extends State<qrCodeScanner> {
                                       int.parse('${result!.code}'))),
                             );
                           },
+                          child: Text('Informations du point ${result!.code}'),
                         )
-                      /*? Text('${result!.code}')*/
                       : const Text(
                           'Scanner un code',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 15,
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                         ),
                 )
