@@ -100,7 +100,7 @@ class Global {
       [6.108921462278005, 48.63264273748041],
       [6.10871480295512, 48.63246285404148]
     ], [
-      1
+      "1"
     ]),
     Zone(2, "zone accumulateur", "Polygon", [
       [6.107441055388648, 48.63148895480714],
@@ -113,7 +113,7 @@ class Global {
       [6.107110267633459, 48.63140567189413],
       [6.107441055388648, 48.63148895480714]
     ], [
-      2
+      "2"
     ]),
   ];
 
@@ -176,7 +176,7 @@ class Global {
         toReturn = file.directus_files_id;
       }
     }
-    return toReturn;
+    return toReturn.toString();
   }
 
   static int getParcoursIndexFromId(int parcoursId) {
@@ -203,7 +203,7 @@ class Global {
     return toReturn;
   }
 
-  static int getPointIdByFromZone(int Point_associe) {
+  static int getPointIdByFromZone(String Point_associe) {
     int toReturn = 0;
     for (var association in Global.zonesPointAssocieList) {
       if (association.id == Point_associe) {
@@ -259,7 +259,11 @@ class Global {
       marker.actualGoal = false;
     }
     if (choix != -1) {
-      Global.pointsList[Global.parcoursList[choix].etape[0]].actualGoal = true;
+      Global.pointsList
+          .where((element) =>
+              element.idPoint == Global.parcoursList[choix].etape[0])
+          .first
+          .actualGoal = true;
     }
   }
 
@@ -286,9 +290,11 @@ class Global {
         i++;
       }
       if (index + 1 < Global.parcoursList[Global.choixParcours].etape.length) {
-        Global
-            .pointsList[
-                (Global.parcoursList[Global.choixParcours].etape[index + 1])]
+        Global.pointsList
+            .where((element) =>
+                element.idPoint ==
+                Global.parcoursList[Global.choixParcours].etape[index + 1])
+            .first
             .actualGoal = true;
       }
       Global.pointsList[indexPoint].actualGoal = false;
@@ -299,8 +305,7 @@ class Global {
     for (var zone in Global.zonesList) {
       if (zone.Point_associe.isNotEmpty) {
         for (var point in zone.Point_associe) {
-          Global.pointsList[getIndexOfPointById(getPointIdByFromZone(point))]
-                  .icon =
+          Global.pointsList[getIndexOfPointById(point)].icon =
               const Icon(Icons.my_location, color: Colors.blue, size: 25);
         }
       }
