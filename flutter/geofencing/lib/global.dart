@@ -12,8 +12,6 @@ import 'models/pointsvideos.dart';
 import 'models/zones.dart';
 import 'models/coordonnees.dart';
 
-// import 'bdd/Zone.dart';
-
 /*
 import 'package:geofencing/bdd/Parcours.dart';
 import 'models/etat.dart';
