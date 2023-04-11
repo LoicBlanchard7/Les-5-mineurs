@@ -32,6 +32,10 @@ class YoutubePlayerScaffold {
           YoutubePlayer(
             controller: controller,
             showVideoProgressIndicator: true,
+            bottomActions: [
+              CurrentPosition(),
+              ProgressBar(isExpanded: true),
+            ],
           )
         ],
       ),
