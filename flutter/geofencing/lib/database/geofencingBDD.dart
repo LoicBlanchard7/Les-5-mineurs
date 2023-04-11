@@ -134,7 +134,10 @@ class geofencingBDD {
     await Points.insertPoints(points2, await database);
     print(await Points.listPoints(await database));
 
-    var etat = const Etat(idEtat: 1, lastUpdate: "2023-02-14T17:35:22");
+    var etat = const Etat(
+        idEtat: 1,
+        lastUpdate:
+            "Tue Apr 11 2023 12:29:56 GMT+0000 (Coordinated Universal Time)");
     await Etat.insertEtat(etat, await database);
     print(await Etat.listEtats(await database));
   }

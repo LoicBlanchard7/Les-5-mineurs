@@ -24,13 +24,14 @@ class MyAppState extends State<ReglagePage> {
   void isUpDate(context) async {
     try {
       print('fetchData called');
-      const url = 'http://docketu.iutnc.univ-lorraine.fr:51080/Items/Etat';
+      const url = 'https://iut.netlor.fr/items/Etat';
       final uri = Uri.parse(url);
       final response = await http.get(uri);
       final body = response.body;
       final json = jsonDecode(body);
-      final results = json['data'];
+      final results = json['data'][0];
       final updateApi = hash(results['LastUpdate']);
+
       print(results['LastUpdate']);
 
       final database = await openDatabase(
@@ -40,14 +41,14 @@ class MyAppState extends State<ReglagePage> {
       List<Etat> etats = await Etat.listEtats(await database);
       final updateBDD = hash(etats[0].lastUpdate);
       print(etats[0].lastUpdate);
-
       if (updateApi != updateBDD) {
-        print("FAUT METTRE A JOUR ENCULE");
-        geofencingBDD.UpdateDatabase(database);
+        print("FAUT METTRE A JOUR");
+        //geofencingBDD.UpdateDatabase(database);
       } else {
-        print("C'EST A JOUR FDP");
+        print("C'EST A JOUR");
       }
     } catch (e) {
+      print(e);
       _showMyDialog(context);
     }
   }
