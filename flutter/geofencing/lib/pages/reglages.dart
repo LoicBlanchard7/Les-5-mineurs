@@ -11,15 +11,7 @@ import 'dart:convert';
 import 'package:geofencing/database/geofencingBDD.dart';
 import 'package:sqflite/sqflite.dart';
 
-import 'package:geofencing/models/coordonnees.dart';
 import 'package:geofencing/models/etat.dart';
-import 'package:geofencing/models/parcours.dart';
-import 'package:geofencing/models/parcourspoints.dart';
-import 'package:geofencing/models/points.dart';
-import 'package:geofencing/models/pointsfiles.dart';
-import 'package:geofencing/models/pointsvideos.dart';
-import 'package:geofencing/models/zones.dart';
-import 'package:geofencing/models/zonespoint.dart';
 
 class ReglagePage extends StatefulWidget {
   const ReglagePage({super.key});
