@@ -43,7 +43,7 @@ class MyAppState extends State<ReglagePage> {
       print(etats[0].lastUpdate);
       if (updateApi != updateBDD) {
         print("FAUT METTRE A JOUR");
-        //geofencingBDD.UpdateDatabase(database);
+        geofencingBDD.UpdateDatabase(database);
       } else {
         print("C'EST A JOUR");
       }

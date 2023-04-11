@@ -68,7 +68,7 @@ class geofencingBDD {
       ''');
         db.execute('''
         CREATE TABLE pointsVideos(
-          idPointsVideos INTEGER PRIMARY KEY, 
+          idPointsVideos INTEGER PRIMARY KEY , 
           idPoint STRING, 
           urlVideo STRING NOT NULL,
           FOREIGN KEY (idPoint) REFERENCES points (idPoint)
@@ -222,26 +222,26 @@ class geofencingBDD {
   static void UpdateDatabase(Database database) async {
     //deleteData(database);
 
-    const url = 'http://docketu.iutnc.univ-lorraine.fr:51080/Items/';
+    const url = 'https://iut.netlor.fr/items/';
 
     //ETAT
     var response = await http.get(Uri.parse("${url}Etat"));
     var json = jsonDecode(response.body);
-    var results = json['data'];
+    var results = json['data'][0];
     final etat = Etat(idEtat: results['id'], lastUpdate: results['LastUpdate']);
-    await Etat.insertEtat(etat, database);
+    // await Etat.insertEtat(etat, database);
 
     print(await Etat.listEtats(database));
 
     //POINT
-    response = await http.get(Uri.parse("${url}Points"));
+    response = await http.get(Uri.parse("${url}Point"));
     json = jsonDecode(response.body);
     results = json['data'] as List<dynamic>;
     final points = results.map((elem) {
       return Points(
-          idPoint: elem['id'],
+          idPoint: elem['uid'],
           titre: elem['Titre'],
-          contenu: elem['Contenu'],
+          contenu: elem['Description'],
           posX: elem['Position']['coordinates'][0],
           posY: elem['Position']['coordinates'][1]);
     }).toList();
@@ -253,34 +253,37 @@ class geofencingBDD {
     print(await Points.listPoints(database));
 
     //POINT_FILES
-    response = await http.get(Uri.parse("${url}Points_files"));
+    response = await http.get(Uri.parse("${url}Point_files"));
     json = jsonDecode(response.body);
     results = json['data'] as List<dynamic>;
     final points_files = results.map((elem) {
+      if (elem['Point_uid'] == null) {
+        elem['Point_uid'] = "null";
+      }
       return PointsFiles(
           idPointsFiles: elem['id'],
-          idPoint: elem['Points_id'],
+          idPoint: elem['Point_uid'],
           idDirectus: elem['directus_files_id']);
     }).toList();
 
     for (var file in points_files) {
       await PointsFiles.insertPointsFiles(file, database);
     }
-
     print(await PointsFiles.listPointsFiles(database));
 
     //POINT_VIDEO
-    response = await http.get(Uri.parse("${url}Points"));
+    response = await http.get(Uri.parse("${url}Point"));
     json = jsonDecode(response.body);
     results = json['data'] as List<dynamic>;
     int index = -1;
     final pointsVideos = results.map((elem) {
-      if (elem["URL_video"] != null) {
-        print(elem);
-        for (var vid in elem["URL_video"]) {
+      if (elem["Url_video"] != null) {
+        for (var vid in elem["Url_video"]) {
           index++;
           return PointsVideos(
-              idPointsVideos: index, idPoint: elem['id'], urlVideo: vid["Url"]);
+              idPointsVideos: index,
+              idPoint: elem['uid'],
+              urlVideo: vid["Lien"]);
         }
       }
     });
@@ -293,14 +296,14 @@ class geofencingBDD {
     print(await PointsVideos.listPointsVideos(database));
 
     //ZONES
-    response = await http.get(Uri.parse("${url}Zones"));
+    response = await http.get(Uri.parse("${url}Zone"));
     json = jsonDecode(response.body);
     results = json['data'] as List<dynamic>;
     final zones = results.map((elem) {
       return Zones(
         idZone: elem['id'],
         titre: elem['Titre'],
-        idPoint: elem['Point_associe'][0],
+        idPoint: elem['point_associe'][0],
       );
     }).toList();
 
@@ -310,38 +313,22 @@ class geofencingBDD {
 
     print(await Zones.listZones(database));
 
-    //ZONESPOINT
-    response = await http.get(Uri.parse("${url}Zones_Point_associe"));
-    json = jsonDecode(response.body);
-    results = json['data'] as List<dynamic>;
-    final zonepoint = results.map((elem) {
-      return ZonesPoint(
-          idZonePoint: elem['id'],
-          idZone: elem['Zones_id'],
-          item: elem['item'],
-          collection: elem['collection']);
-    }).toList();
-
-    for (var point in zonepoint) {
-      await ZonesPoint.insertZonesPoint(point, database);
-    }
-
-    print(await ZonesPoint.listZonesPoint(database));
-
     //COORDONNEES
-    response = await http.get(Uri.parse("${url}Zones"));
+    response = await http.get(Uri.parse("${url}Zone"));
     json = jsonDecode(response.body);
     results = json['data'] as List<dynamic>;
     index = -1;
-    final coords = results.map((elem) {
+    var listcoo = [];
+    results.map((elem) {
       for (var cord in elem['Position']["coordinates"][0]) {
+        print(cord);
         index++;
-        return Coordonnees(
-            idCoo: index, idZone: elem['id'], posX: cord[0], posY: cord[1]);
+        listcoo.add(Coordonnees(
+            idCoo: index, idZone: elem['id'], posX: cord[0], posY: cord[1]));
       }
-    }).toList();
+    });
 
-    for (var coordonnee in coords) {
+    for (var coordonnee in listcoo) {
       if (coordonnee != null) {
         await Coordonnees.insertCoordonnees(coordonnee, database);
       }
@@ -354,11 +341,12 @@ class geofencingBDD {
     json = jsonDecode(response.body);
     results = json['data'] as List<dynamic>;
     final parcours = results.map((elem) {
+      print(elem['Etape']);
       return Parcours(
         idParcours: elem['id'],
         titre: elem['Titre'],
         duree: elem['Duree'],
-        etape: elem['Etape'],
+        etape: jsonDecode(jsonEncode(elem['Etape'])).cast<String>().toList(),
       );
     }).toList();
 
