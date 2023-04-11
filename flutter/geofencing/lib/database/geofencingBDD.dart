@@ -143,6 +143,23 @@ class geofencingBDD {
         idPoint: "ed1469f4-77ac-4a9d-bc8d-a2e1acb8bfb7",
         idDirectus: "ejiolejne");
     await PointsFiles.insertPointsFiles(files, await database);
+
+    const zones = Zones(
+        idZone: 1,
+        titre: "Entrée",
+        idPoint: "ed1469f4-77ac-4a9d-bc8d-a2e1acb8bfb7");
+    await Zones.insertZones(zones, await database);
+
+    const coordonnees1 = Coordonnees(
+        idCoo: 1, idZone: 1, posX: 6.10871480295512, posY: 48.63246285404148);
+    const coordonnees2 = Coordonnees(
+        idCoo: 2, idZone: 1, posX: 6.108598872116033, posY: 48.63223300204797);
+    const coordonnees3 = Coordonnees(
+        idCoo: 3, idZone: 1, posX: 6.10909283830145, posY: 48.632213014868825);
+
+    await Coordonnees.insertCoordonnees(coordonnees1, await database);
+    await Coordonnees.insertCoordonnees(coordonnees2, await database);
+    await Coordonnees.insertCoordonnees(coordonnees3, await database);
   }
 
   static initGlobalVariable() async {
@@ -151,11 +168,10 @@ class geofencingBDD {
         join(await getDatabasesPath(), 'geofencingDB.db'),
       );
       final points = await Points.listPoints(database);
-      final etats = await Etat.listEtats(database);
       final parcours = await Parcours.listParcours(database);
-      final zones = await Zones.listZones(database);
       final coordonnees = await Coordonnees.listCoordonnees(database);
       final zonesPoints = await ZonesPoint.listZonesPoint(database);
+      final zones = await Zones.listZones(database);
 
       final pointsFiles = await PointsFiles.listPointsFiles(database);
       final pointVideos = await PointsVideos.listPointsVideos(database);
@@ -165,6 +181,8 @@ class geofencingBDD {
 
       Global.pointsFiles = pointsFiles;
       Global.pointVideos = pointVideos;
+      Global.coordonneesList = coordonnees;
+      Global.zonesList = zones;
     } catch (e) {}
   }
 

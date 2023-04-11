@@ -113,9 +113,6 @@ class _MyAppState extends State<MapPage> {
                       CurrentLocationLayer(
                         followOnLocationUpdate: FollowOnLocationUpdate.always,
                       ),
-                      CircleLayer(
-                        circles: Global.getCircles(),
-                      ),
                       PolygonLayer(
                         polygons: Global.getPolygons(),
                       ),
