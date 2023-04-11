@@ -103,7 +103,7 @@ class MyAppState extends State<AccueilPage> {
                                 icon:
                                     const Icon(Icons.route_outlined, size: 30),
                                 label: const Text(
-                                  'Choix du parcours',
+                                  'Choisir parcours',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,

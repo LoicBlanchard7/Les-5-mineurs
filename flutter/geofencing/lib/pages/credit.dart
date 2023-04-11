@@ -38,7 +38,7 @@ class MyAppState extends State<CreditPage> {
             ),
           ),
           const Text(
-            "Etudiants composants le groupe de travail :\n- Erwan Bourlon\nLoïc Blanchard\n- Léa Jarosz\n- Lilian Leblanc\n\nProfesseur référant au projet : Gérome Canals",
+            "Etudiants composants le groupe de travail :\n- Erwan Bourlon\n- Loïc Blanchard\n- Léa Jarosz\n- Lilian Leblanc\n\nProfesseur référant au projet : Gérome Canals",
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 20,

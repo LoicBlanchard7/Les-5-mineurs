@@ -15,14 +15,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.grey,
       ),
-      home: const qrCodeScanner(title: 'Flutter Demo Home Page'),
+      home: const qrCodeScanner(),
     );
   }
 }
 
 class qrCodeScanner extends StatefulWidget {
-  const qrCodeScanner({Key? key, required this.title}) : super(key: key);
-  final String title;
+  const qrCodeScanner({Key? key}) : super(key: key);
 
   @override
   State<qrCodeScanner> createState() => _MyPageState();
@@ -45,7 +44,7 @@ class _MyPageState extends State<qrCodeScanner> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text("Scanner un QR Code"),
         ),
         body: Center(
           child: Container(

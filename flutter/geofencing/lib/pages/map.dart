@@ -150,8 +150,7 @@ class _MyAppState extends State<MapPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            const qrCodeScanner(title: 'Scan QR Code.')),
+                        builder: (context) => const qrCodeScanner()),
                   );
                 },
                 child: const Icon(
