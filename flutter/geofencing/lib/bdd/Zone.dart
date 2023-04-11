@@ -1,16 +1,14 @@
-// ignore_for_file: non_constant_identifier_names, file_names
-
 class Zone {
   int id;
-  String Titre;
+  String titre;
   String type;
   List<List<double>> coordinates;
-  List<String> Point_associe;
+  List<String> point_associe;
   List<double> coordinate;
   double radius;
-  Zone(this.id, this.Titre, this.type,
+  Zone(this.id, this.titre, this.type,
       [this.coordinates = const [[]],
-      this.Point_associe = const [],
+      this.point_associe = const [],
       this.coordinate = const [],
       this.radius = 0]);
 }

@@ -20,24 +20,17 @@ import '../global.dart';
 
 class geofencingBDD {
   static launchdatabase() async {
-    // Avoid errors caused by flutter upgrade.
-    // Importing 'package:flutter/widgets.dart' is required.
     WidgetsFlutterBinding.ensureInitialized();
 
-    // Open the database and store the reference.
     final database = openDatabase(
-      // Set the path to the database. Note: Using the `join` function from the
-      // `path` package is best practice to ensure the path is correctly
-      // constructed for each platform.
       join(await getDatabasesPath(), 'geofencingDB.db'),
       onCreate: (db, version) {
-        // Run the CREATE TABLE statement on the database.
         db.execute('''
         CREATE TABLE etat(
           idEtat INTEGER PRIMARY KEY, 
           lastUpdate STRING NOT NULL
         );
-      '''); // Fait
+      ''');
         db.execute('''
         CREATE TABLE parcours(
           idParcours INTEGER PRIMARY KEY, 
@@ -45,7 +38,7 @@ class geofencingBDD {
           duree STRING NOT NULL,
           etape STRING NOT NULL
         );
-      '''); // Fait
+      ''');
         db.execute('''
         CREATE TABLE parcoursPoints(
         idParcoursPoints INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -54,8 +47,7 @@ class geofencingBDD {
         FOREIGN KEY (idPoint) REFERENCES points (idPoint),
         FOREIGN KEY (idParcour) REFERENCES parcours (idParcours)
         );
-      '''); // Fait
-
+      ''');
         db.execute('''
         CREATE TABLE points(
           idPoint STRING PRIMARY KEY, 
@@ -65,8 +57,7 @@ class geofencingBDD {
           posY double,
           actualGoal boolean
           );
-      '''); // Fait
-
+      ''');
         db.execute('''
         CREATE TABLE pointsFiles(
           idPointsFiles INTEGER PRIMARY KEY, 
@@ -74,8 +65,7 @@ class geofencingBDD {
           idDirectus STRING NOT NULL,
           FOREIGN KEY (idPoint) REFERENCES points (idPoint)
         );
-      '''); // Fait
-
+      ''');
         db.execute('''
         CREATE TABLE pointsVideos(
           idPointsVideos INTEGER PRIMARY KEY, 
@@ -83,8 +73,7 @@ class geofencingBDD {
           urlVideo STRING NOT NULL,
           FOREIGN KEY (idPoint) REFERENCES points (idPoint)
         );
-      '''); // Fait
-
+      ''');
         db.execute('''
         CREATE TABLE zones(
           idZone INTEGER PRIMARY KEY, 
@@ -92,7 +81,7 @@ class geofencingBDD {
           idPoint STRING,
           FOREIGN KEY (idPoint) REFERENCES points (idPoint)
         );
-      '''); // Fait
+      ''');
         db.execute('''
         CREATE TABLE coordonnees(
           idCoo INTEGER PRIMARY KEY, 
@@ -101,7 +90,7 @@ class geofencingBDD {
           posY double,
           FOREIGN KEY (idZone) REFERENCES zones (idZone)
         );
-      '''); // Fait
+      ''');
         return db.execute('''
         CREATE TABLE zonesPoint(
           idZonePoint INTEGER PRIMARY KEY, 
@@ -110,10 +99,8 @@ class geofencingBDD {
           collection STRING NOT NULL,
           FOREIGN KEY (idZone) REFERENCES zones (idZone)
         );
-      '''); // Fait
+      ''');
       },
-      // Set the version. This executes the onCreate function and provides a
-      // path to perform database upgrades and downgrades.
       version: 1,
     );
 
