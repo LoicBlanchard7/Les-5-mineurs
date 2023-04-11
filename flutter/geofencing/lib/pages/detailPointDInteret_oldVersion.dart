@@ -5,7 +5,7 @@ import 'package:geofencing/pages/youtubePlayer.dart';
 import 'map.dart';
 
 class detailPointDInteret extends StatefulWidget {
-  int id;
+  String id;
 
   detailPointDInteret(this.id, {super.key});
 
@@ -14,7 +14,7 @@ class detailPointDInteret extends StatefulWidget {
 }
 
 class _MyAppState extends State<detailPointDInteret> {
-  int id;
+  String id;
 
   _MyAppState(this.id);
 

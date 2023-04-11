@@ -4,12 +4,13 @@ class Parcours {
   final int idParcours;
   final String titre;
   final String duree;
+  final List<String> etape;
 
-  const Parcours({
-    required this.idParcours,
-    required this.titre,
-    required this.duree,
-  });
+  const Parcours(
+      {required this.idParcours,
+      required this.titre,
+      required this.duree,
+      required this.etape});
 
   Map<String, dynamic> toMap() {
     return {
@@ -66,7 +67,8 @@ class Parcours {
       return Parcours(
           idParcours: maps[i]['idParcours'],
           titre: maps[i]['titre'],
-          duree: maps[i]['duree']);
+          duree: maps[i]['duree'],
+          etape: maps[i]['etape']);
     });
   }
 }

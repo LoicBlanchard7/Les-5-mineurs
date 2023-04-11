@@ -47,7 +47,7 @@ class _MyAppState extends State<detailPointDInteret> {
           toolbarHeight: 100,
           centerTitle: true,
           title: Text(
-            Global.pointsList[Global.getIndexOfPointById(id)].Titre,
+            Global.pointsList[Global.getIndexOfPointById(id)].titre,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 40,
@@ -84,7 +84,7 @@ List<TableRow> contenuAffichage(
     BuildContext context, int id, List<YoutubePlayerScaffold> playersList) {
   List<TableRow> contenu = [];
   // images
-  for (var image in Global.pointsList[Global.getIndexOfPointById(id)].Images) {
+  for (var image in Global.pointsList[Global.getIndexOfPointById(id)].images) {
     contenu.add(
       TableRow(
         children: [
@@ -101,7 +101,7 @@ List<TableRow> contenuAffichage(
     TableRow(
       children: [
         Text(
-          Global.pointsList[Global.getIndexOfPointById(id)].Contenu,
+          Global.pointsList[Global.getIndexOfPointById(id)].contenu,
           textAlign: TextAlign.justify,
           style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 2.0),
         ),
@@ -110,8 +110,8 @@ List<TableRow> contenuAffichage(
   );
   // videos
   for (var video
-      in Global.pointsList[Global.getIndexOfPointById(id)].URL_video) {
-    YoutubePlayerScaffold player = YoutubePlayerScaffold(video.Url);
+      in Global.pointsList[Global.getIndexOfPointById(id)].urlVideo) {
+    YoutubePlayerScaffold player = YoutubePlayerScaffold(video.urlVideo);
     player.initState();
     contenu.add(
       TableRow(
