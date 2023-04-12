@@ -99,10 +99,10 @@ class _MyAppState extends State<MapPage> {
                     options: MapOptions(
                       // center: LatLng(currentLocation.latitude!,
                       //     currentLocation.longitude!),
-                      center: LatLng(48.6295563, 6.107150),
-                      minZoom: 18,
+                      center: LatLng(48.6314926423909, 6.10790802805931),
+                      minZoom: 16,
                       maxZoom: 18,
-                      zoom: 18,
+                      zoom: 16,
                     ),
                     children: [
                       TileLayer(
