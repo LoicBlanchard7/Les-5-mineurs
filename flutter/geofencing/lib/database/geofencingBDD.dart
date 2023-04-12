@@ -11,7 +11,6 @@ import 'package:geofencing/models/points.dart';
 import 'package:geofencing/models/pointsfiles.dart';
 import 'package:geofencing/models/pointsvideos.dart';
 import 'package:geofencing/models/zones.dart';
-import 'package:geofencing/models/zonespoint.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:http/http.dart' as http;
@@ -88,15 +87,6 @@ class geofencingBDD {
           idZone INTEGER, 
           posX double, 
           posY double,
-          FOREIGN KEY (idZone) REFERENCES zones (idZone)
-        );
-      ''');
-        return db.execute('''
-        CREATE TABLE zonesPoint(
-          idZonePoint INTEGER PRIMARY KEY, 
-          idZone INTEGER, 
-          item STRING, 
-          collection STRING NOT NULL,
           FOREIGN KEY (idZone) REFERENCES zones (idZone)
         );
       ''');
@@ -180,7 +170,6 @@ class geofencingBDD {
       final points = await Points.listPoints(database);
       final parcours = await Parcours.listParcours(database);
       final coordonnees = await Coordonnees.listCoordonnees(database);
-      final zonesPoints = await ZonesPoint.listZonesPoint(database);
       final zones = await Zones.listZones(database);
 
       final pointsFiles = await PointsFiles.listPointsFiles(database);
@@ -193,7 +182,9 @@ class geofencingBDD {
       Global.pointVideos = pointVideos;
       Global.coordonneesList = coordonnees;
       Global.zonesList = zones;
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
   }
 
   insert(String s, Map<String, dynamic> map, {required conflictAlgorithm}) {}
@@ -222,11 +213,6 @@ class geofencingBDD {
     final ancienCoordonnees = await Coordonnees.listCoordonnees(database);
     for (var coordonnee in ancienCoordonnees) {
       await Coordonnees.deleteCoordonnees(coordonnee.idCoo, database);
-    }
-
-    final ancienZonesPoint = await ZonesPoint.listZonesPoint(database);
-    for (var zonesPoint in ancienZonesPoint) {
-      await ZonesPoint.deleteZonesPoint(zonesPoint.idZonePoint, database);
     }
 
     final ancienPointsFiles = await PointsFiles.listPointsFiles(database);
@@ -301,12 +287,10 @@ class geofencingBDD {
     var listVid = await PointsVideos.listPointsVideos(database);
     int index = listVid.length;
     var listvideo = [];
-    print('point vidéo');
 
     results.forEach((element) {
       if (element['Url_video'] != null) {
         element['Url_video'].forEach((elem) {
-          print(elem);
           listvideo.add(PointsVideos(
               idPointsVideos: index,
               idPoint: element['uid'],
@@ -351,25 +335,24 @@ class geofencingBDD {
     results.forEach((element) {
       element['Position']["coordinates"][0].forEach((elem) {
         index++;
-        print(elem);
         listcoo.add(Coordonnees(
             idCoo: index, idZone: element['id'], posX: elem[0], posY: elem[1]));
       });
     });
 
-    print(listcoo);
     for (var coordonnee in listcoo) {
       if (coordonnee != null) {
-        print("ici");
         await Coordonnees.insertCoordonnees(coordonnee, database);
       }
     }
+
+    print(await Coordonnees.listCoordonnees(database));
+
     //PARCOURS
     response = await http.get(Uri.parse("${url}Parcours"));
     json = jsonDecode(response.body);
     results = json['data'] as List<dynamic>;
     final parcours = results.map((elem) {
-      print(elem['Etape']);
       return Parcours(
         idParcours: elem['id'],
         titre: elem['Titre'],

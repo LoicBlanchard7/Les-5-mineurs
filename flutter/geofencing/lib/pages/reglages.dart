@@ -32,20 +32,15 @@ class MyAppState extends State<ReglagePage> {
       final results = json['data'][0];
       final updateApi = hash(results['LastUpdate']);
 
-      print(results['LastUpdate']);
-
       final database = await openDatabase(
         join(await getDatabasesPath(), 'geofencingDB.db'),
       );
 
       List<Etat> etats = await Etat.listEtats(await database);
       final updateBDD = hash(etats[0].lastUpdate);
-      print(etats[0].lastUpdate);
       if (updateApi != updateBDD) {
-        print("FAUT METTRE A JOUR");
+        print("Mise à jour de la BDD");
         geofencingBDD.UpdateDatabase(database);
-      } else {
-        print("C'EST A JOUR");
       }
     } catch (e) {
       _showMyDialog(context);
