@@ -97,17 +97,23 @@ class Global {
 
   static void selectParcours(choix) {
     Global.choixParcours = choix;
+    print(choix);
     for (var marker in Global.pointsList) {
       marker.actualGoal = false;
     }
-    if (choix != -1) {
-      if (!Global.pointsList
-          .where((element) =>
-              element.idPoint == Global.parcoursList[choix - 1].etape)
-          .isEmpty) {
+    if (choix == -1) {
+      return;
+    }
+    Parcours parc = Global.parcoursList
+        .where((element) => element.idParcours == choix)
+        .first;
+    if (parc.etape.isNotEmpty) {
+      if (Global.pointsList
+          .where((element) => element.idPoint == parc.etape[0])
+          .first
+          .actualGoal = true) {
         Global.pointsList
-            .where((element) =>
-                element.idPoint == Global.parcoursList[choix - 1].etape[0])
+            .where((element) => element.idPoint == parc.etape[0])
             .first
             .actualGoal = true;
       }
