@@ -21,6 +21,20 @@ class ReglagePage extends StatefulWidget {
 }
 
 class MyAppState extends State<ReglagePage> {
+  bool isLoading = false;
+
+  void _onButtonClicked() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    await Future.delayed(const Duration(seconds: 5));
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   void isUpDate(context) async {
     try {
       print('fetchData called');
@@ -103,9 +117,8 @@ class MyAppState extends State<ReglagePage> {
                             fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.bold,
                             color: Colors.white),
-                        //overflow: TextOverflow.ellipsis,
-                        //maxLines: 2,
                       )),
+                  isLoading ? const LoadingScreen() : const SizedBox(),
                   Container(
                     alignment: Alignment.center,
                     child: Column(
@@ -128,12 +141,16 @@ class MyAppState extends State<ReglagePage> {
                                     fontWeight: FontWeight.bold,
                                     fontSize: 30,
                                   ),
-                                ), // <-- Text
-                                backgroundColor: Colors.black,
-                                // icon: const Icon(Icons.arrow_back_ios_sharp),
-                                onPressed: () {
-                                  isUpDate(context);
-                                },
+                                ),
+                                backgroundColor: !isLoading
+                                    ? Colors.black
+                                    : const Color.fromARGB(255, 158, 156, 156),
+                                onPressed: !isLoading
+                                    ? () {
+                                        _onButtonClicked();
+                                        isUpDate(context);
+                                      }
+                                    : null,
                               ),
                             ),
                           ),
@@ -155,16 +172,20 @@ class MyAppState extends State<ReglagePage> {
                                     fontWeight: FontWeight.bold,
                                     fontSize: 30,
                                   ),
-                                ), // <-- Text
-                                backgroundColor: Colors.black,
-                                // icon: const Icon(Icons.arrow_back_ios_sharp),
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const MapPage()),
-                                  );
-                                },
+                                ),
+                                backgroundColor: !isLoading
+                                    ? Colors.black
+                                    : const Color.fromARGB(255, 158, 156, 156),
+                                onPressed: !isLoading
+                                    ? () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const MapPage()),
+                                        );
+                                      }
+                                    : null,
                               ),
                             ),
                           ),
@@ -187,16 +208,19 @@ class MyAppState extends State<ReglagePage> {
                                     fontSize: 30,
                                   ),
                                 ), // <-- Text
-                                backgroundColor: Colors.black,
-                                // icon: const Icon(Icons.arrow_back_ios_sharp),
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const CreditPage()),
-                                  );
-                                },
+                                backgroundColor: !isLoading
+                                    ? Colors.black
+                                    : const Color.fromARGB(255, 158, 156, 156),
+                                onPressed: !isLoading
+                                    ? () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const CreditPage()),
+                                        );
+                                      }
+                                    : null,
                               ),
                             ),
                           ),
@@ -210,6 +234,27 @@ class MyAppState extends State<ReglagePage> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class LoadingScreen extends StatelessWidget {
+  const LoadingScreen({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: const [
+        Text(
+          "Téléchargement des données...",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18.0,
+          ),
+        ),
+        SizedBox(height: 16.0),
+        CircularProgressIndicator(),
+      ],
     );
   }
 }
