@@ -3,7 +3,7 @@ import 'package:sqflite/sqflite.dart';
 class Zones {
   final int idZone;
   final String titre;
-  final int idPoint;
+  final String idPoint;
 
   const Zones({
     required this.idZone,
