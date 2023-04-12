@@ -104,64 +104,72 @@ class geofencingBDD {
       version: 1,
     );
 
-    var point1 = Points(
-        idPoint: "a9cf4eab-ee9a-40a0-8a32-bdd4c7027075",
-        titre: "Château d'eau",
-        contenu:
-            "La château d'eau est une construction placée sur un sommet géographique. Il permet de stocker de l'eau et de fournir le réseau de distribution en eau sous pression.",
-        posX: 6.108300434237549,
-        posY: 48.632316868572445);
-    await Points.insertPoints(point1, await database);
+    if (await Etat.getEtat(await database) == null) {
+      var point1 = Points(
+          idPoint: "a9cf4eab-ee9a-40a0-8a32-bdd4c7027075",
+          titre: "Château d'eau",
+          contenu:
+              "La château d'eau est une construction placée sur un sommet géographique. Il permet de stocker de l'eau et de fournir le réseau de distribution en eau sous pression.",
+          posX: 6.108300434237549,
+          posY: 48.632316868572445);
+      await Points.insertPoints(point1, await database);
 
-    var points2 = Points(
-        idPoint: "ed1469f4-77ac-4a9d-bc8d-a2e1acb8bfb7",
-        titre: 'Entrée',
-        contenu:
-            "L'entrée de la mine a été rénové depuis son existence. Néanmoins cette dernière est la même depuis le début. Les mineurs y passaient pour entrer dans la mine et aller travailler.",
-        posX: 6.108984540809615,
-        posY: 48.63241025622807);
+      var points2 = Points(
+          idPoint: "ed1469f4-77ac-4a9d-bc8d-a2e1acb8bfb7",
+          titre: 'Entrée',
+          contenu:
+              "L'entrée de la mine a été rénové depuis son existence. Néanmoins cette dernière est la même depuis le début. Les mineurs y passaient pour entrer dans la mine et aller travailler.",
+          posX: 6.108984540809615,
+          posY: 48.63241025622807);
 
-    await Points.insertPoints(points2, await database);
+      await Points.insertPoints(points2, await database);
 
-    var etat = const Etat(
-        idEtat: 1,
-        lastUpdate:
-            "Tue Apr 11 2023 12:29:56 GMT+0000 (Coordinated Universal Time)");
-    await Etat.insertEtat(etat, await database);
+      var etat = const Etat(
+          idEtat: 1,
+          lastUpdate:
+              "Tue Apr 11 2023 12:29:56 GMT+0000 (Coordinated Universal Time)");
+      await Etat.insertEtat(etat, await database);
 
-    const parcours = Parcours(
-        idParcours: 1, titre: "parcours1", duree: "00:30:00", etape: ["1"]);
-    await Parcours.insertParcours(parcours, await database);
+      const parcours = Parcours(
+          idParcours: 1, titre: "parcours1", duree: "00:30:00", etape: ["1"]);
+      await Parcours.insertParcours(parcours, await database);
 
-    const videos = PointsVideos(
-        idPointsVideos: 1,
-        idPoint: "ed1469f4-77ac-4a9d-bc8d-a2e1acb8bfb7",
-        urlVideo:
-            "https://www.youtube.com/watch?v=431G8qVeslM&ab_channel=VincentFerry");
-    await PointsVideos.insertPointsVideos(videos, await database);
+      const videos = PointsVideos(
+          idPointsVideos: 1,
+          idPoint: "ed1469f4-77ac-4a9d-bc8d-a2e1acb8bfb7",
+          urlVideo:
+              "https://www.youtube.com/watch?v=431G8qVeslM&ab_channel=VincentFerry");
+      await PointsVideos.insertPointsVideos(videos, await database);
 
-    const files = PointsFiles(
-        idPointsFiles: 1,
-        idPoint: "ed1469f4-77ac-4a9d-bc8d-a2e1acb8bfb7",
-        idDirectus: "Image");
-    await PointsFiles.insertPointsFiles(files, await database);
+      const files = PointsFiles(
+          idPointsFiles: 1,
+          idPoint: "ed1469f4-77ac-4a9d-bc8d-a2e1acb8bfb7",
+          idDirectus: "7e6476cf-73a2-4a6f-9653-a61e08520651");
+      await PointsFiles.insertPointsFiles(files, await database);
 
-    const zones = Zones(
-        idZone: 1,
-        titre: "Colline",
-        idPoint: "ed1469f4-77ac-4a9d-bc8d-a2e1acb8bfb7");
-    await Zones.insertZones(zones, await database);
+      const zones = Zones(
+          idZone: 1,
+          titre: "Colline",
+          idPoint: "ed1469f4-77ac-4a9d-bc8d-a2e1acb8bfb7");
+      await Zones.insertZones(zones, await database);
 
-    const coordonnees1 = Coordonnees(
-        idCoo: 1, idZone: 1, posX: 6.10871480295512, posY: 48.63246285404148);
-    const coordonnees2 = Coordonnees(
-        idCoo: 2, idZone: 1, posX: 6.108598872116033, posY: 48.63223300204797);
-    const coordonnees3 = Coordonnees(
-        idCoo: 3, idZone: 1, posX: 6.10909283830145, posY: 48.632213014868825);
+      const coordonnees1 = Coordonnees(
+          idCoo: 1, idZone: 1, posX: 6.10871480295512, posY: 48.63246285404148);
+      const coordonnees2 = Coordonnees(
+          idCoo: 2,
+          idZone: 1,
+          posX: 6.108598872116033,
+          posY: 48.63223300204797);
+      const coordonnees3 = Coordonnees(
+          idCoo: 3,
+          idZone: 1,
+          posX: 6.10909283830145,
+          posY: 48.632213014868825);
 
-    await Coordonnees.insertCoordonnees(coordonnees1, await database);
-    await Coordonnees.insertCoordonnees(coordonnees2, await database);
-    await Coordonnees.insertCoordonnees(coordonnees3, await database);
+      await Coordonnees.insertCoordonnees(coordonnees1, await database);
+      await Coordonnees.insertCoordonnees(coordonnees2, await database);
+      await Coordonnees.insertCoordonnees(coordonnees3, await database);
+    }
   }
 
   static initGlobalVariable() async {
@@ -202,6 +210,9 @@ class geofencingBDD {
     }
 
     final ancienParcours = await Parcours.listParcours(database);
+    for (var parcours in ancienParcours) {
+      await Parcours.deleteParcours(parcours.idParcours, database);
+    }
 
     final ancienZones = await Zones.listZones(database);
     for (var zone in ancienZones) {
@@ -217,10 +228,21 @@ class geofencingBDD {
     for (var zonesPoint in ancienZonesPoint) {
       await ZonesPoint.deleteZonesPoint(zonesPoint.idZonePoint, database);
     }
+
+    final ancienPointsFiles = await PointsFiles.listPointsFiles(database);
+    for (var pointsFiles in ancienPointsFiles) {
+      await PointsFiles.deletePointsFiles(pointsFiles.idPointsFiles, database);
+    }
+
+    final ancienPointsVideos = await PointsVideos.listPointsVideos(database);
+    for (var pointsVideos in ancienPointsVideos) {
+      await PointsVideos.deletePointsVideos(
+          pointsVideos.idPointsVideos, database);
+    }
   }
 
   static void UpdateDatabase(Database database) async {
-    //deleteData(database);
+    deleteData(database);
 
     const url = 'https://iut.netlor.fr/items/';
 
@@ -229,7 +251,8 @@ class geofencingBDD {
     var json = jsonDecode(response.body);
     var results = json['data'][0];
     final etat = Etat(idEtat: results['id'], lastUpdate: results['LastUpdate']);
-    // await Etat.insertEtat(etat, database);
+    final etattest = Etat(idEtat: results['id'], lastUpdate: "nik");
+    await Etat.insertEtat(etattest, database);
 
     print(await Etat.listEtats(database));
 
@@ -275,21 +298,25 @@ class geofencingBDD {
     response = await http.get(Uri.parse("${url}Point"));
     json = jsonDecode(response.body);
     results = json['data'] as List<dynamic>;
-    int index = -1;
-    final pointsVideos = results.map((elem) {
-      if (elem["Url_video"] != null) {
-        for (var vid in elem["Url_video"]) {
-          index++;
-          return PointsVideos(
+    var listVid = await PointsVideos.listPointsVideos(database);
+    int index = listVid.length;
+    var listvideo = [];
+    print('point vidéo');
+
+    results.forEach((element) {
+      if (element['Url_video'] != null) {
+        element['Url_video'].forEach((elem) {
+          print(elem);
+          listvideo.add(PointsVideos(
               idPointsVideos: index,
-              idPoint: elem['uid'],
-              urlVideo: vid["Lien"]);
-        }
+              idPoint: element['uid'],
+              urlVideo: elem['Lien']));
+          index++;
+        });
       }
     });
 
-    print(pointsVideos);
-    for (var video in pointsVideos) {
+    for (var video in listvideo) {
       if (video != null) await PointsVideos.insertPointsVideos(video, database);
     }
 
@@ -317,25 +344,26 @@ class geofencingBDD {
     response = await http.get(Uri.parse("${url}Zone"));
     json = jsonDecode(response.body);
     results = json['data'] as List<dynamic>;
-    index = -1;
+    var listco = await Coordonnees.listCoordonnees(database);
+    index = listco.length;
     var listcoo = [];
-    results.map((elem) {
-      for (var cord in elem['Position']["coordinates"][0]) {
-        print(cord);
+
+    results.forEach((element) {
+      element['Position']["coordinates"][0].forEach((elem) {
         index++;
+        print(elem);
         listcoo.add(Coordonnees(
-            idCoo: index, idZone: elem['id'], posX: cord[0], posY: cord[1]));
-      }
+            idCoo: index, idZone: element['id'], posX: elem[0], posY: elem[1]));
+      });
     });
 
+    print(listcoo);
     for (var coordonnee in listcoo) {
       if (coordonnee != null) {
+        print("ici");
         await Coordonnees.insertCoordonnees(coordonnee, database);
       }
     }
-
-    print(await Coordonnees.listCoordonnees(database));
-
     //PARCOURS
     response = await http.get(Uri.parse("${url}Parcours"));
     json = jsonDecode(response.body);
@@ -355,5 +383,13 @@ class geofencingBDD {
     }
 
     print(await Parcours.listParcours(database));
+
+    Global.pointsList = await Points.listPoints(database);
+    Global.parcoursList = await Parcours.listParcours(database);
+
+    Global.pointsFiles = await PointsFiles.listPointsFiles(database);
+    Global.pointVideos = await PointsVideos.listPointsVideos(database);
+    Global.coordonneesList = await Coordonnees.listCoordonnees(database);
+    Global.zonesList = await Zones.listZones(database);
   }
 }

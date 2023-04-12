@@ -90,7 +90,7 @@ List<TableRow> contenuAffichage(
       TableRow(
         children: [
           Image.network(
-            'http://docketu.iutnc.univ-lorraine.fr:51080/assets/${image.idDirectus}',
+            'http://iut.netlor.fr/assets/${image.idDirectus}',
             fit: BoxFit.contain,
           ),
         ],
