@@ -101,11 +101,16 @@ class Global {
       marker.actualGoal = false;
     }
     if (choix != -1) {
-      Global.pointsList
+      if (!Global.pointsList
           .where((element) =>
-              element.idPoint == Global.parcoursList[choix].etape[0])
-          .first
-          .actualGoal = true;
+              element.idPoint == Global.parcoursList[choix - 1].etape)
+          .isEmpty) {
+        Global.pointsList
+            .where((element) =>
+                element.idPoint == Global.parcoursList[choix - 1].etape[0])
+            .first
+            .actualGoal = true;
+      }
     }
   }
 

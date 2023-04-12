@@ -93,8 +93,8 @@ class geofencingBDD {
       },
       version: 1,
     );
-
-    if (await Etat.getEtat(await database) == null) {
+    final etats = await Etat.listEtats(await database);
+    if (etats.isEmpty) {
       var point1 = Points(
           idPoint: "a9cf4eab-ee9a-40a0-8a32-bdd4c7027075",
           titre: "Château d'eau",
@@ -121,7 +121,13 @@ class geofencingBDD {
       await Etat.insertEtat(etat, await database);
 
       const parcours = Parcours(
-          idParcours: 1, titre: "parcours1", duree: "00:30:00", etape: ["1"]);
+          idParcours: 1,
+          titre: "parcours1",
+          duree: "00:30:00",
+          etape: [
+            "ed1469f4-77ac-4a9d-bc8d-a2e1acb8bfb7",
+            "ed1469f4-77ac-4a9d-bc8d-a2e1acb8bfb7"
+          ]);
       await Parcours.insertParcours(parcours, await database);
 
       const videos = PointsVideos(
@@ -237,8 +243,7 @@ class geofencingBDD {
     var json = jsonDecode(response.body);
     var results = json['data'][0];
     final etat = Etat(idEtat: results['id'], lastUpdate: results['LastUpdate']);
-    final etattest = Etat(idEtat: results['id'], lastUpdate: "nik");
-    await Etat.insertEtat(etattest, database);
+    await Etat.insertEtat(etat, database);
 
     print(await Etat.listEtats(database));
 
