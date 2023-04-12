@@ -36,6 +36,11 @@ class _MyPageState extends State<qrCodeScanner> {
     controller.scannedDataStream.listen((event) {
       setState(() {
         result = event;
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => detailPointDInteret('${result!.code}')),
+        );
       });
     });
   }
@@ -60,39 +65,18 @@ class _MyPageState extends State<qrCodeScanner> {
                   width: 400,
                   child: QRView(key: _gLobalkey, onQRViewCreated: qr),
                 ),
-                Center(
-                  child: (result != null)
-                      ? ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.white,
-                            backgroundColor: Color.fromARGB(255, 19, 121, 12),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      detailPointDInteret('${result!.code}')),
-                            );
-                          },
-                          child: Text(
-                            'Accèder au point : ${Global.pointsList.where((element) => element.idPoint == result!.code).first.titre}',
-                            style: const TextStyle(
-                              fontSize: 20,
-                            ),
-                          ),
-                        )
-                      : const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            'Veuillez scanner un QR Code',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
+                const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      'Veuillez scanner un QR Code',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
                 )
               ],
             ),
